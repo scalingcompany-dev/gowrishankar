@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Sticky Mobile CTA Logic
     const stickyFooter = document.getElementById('stickyFooter');
-    const heroCTA = document.querySelector('.hero-section .primary-cta');
+    const heroCTA = document.querySelector('.hero-section-majestic .massive-cta-orange');
     const paymentSection = document.getElementById('payment');
     
     // Set first FAQ as active by default
@@ -29,42 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         faqItems[0].classList.add('active');
     }
 
-    if (stickyFooter) {
-        // Show sticky footer when user scrolls past the hero CTA
-        window.addEventListener('scroll', () => {
-            // Only show on mobile screens
-            if (window.innerWidth <= 768) {
-                let showSticky = false;
-                
-                // Show if scrolled past hero CTA
-                if (heroCTA) {
-                    const heroRect = heroCTA.getBoundingClientRect();
-                    if (heroRect.bottom < 0) {
-                        showSticky = true;
-                    }
-                } else if (window.scrollY > 500) { // Fallback if no hero CTA found
-                    showSticky = true;
-                }
-
-                // Hide if scrolled to the payment section (so they don't double up)
-                if (paymentSection) {
-                    const paymentRect = paymentSection.getBoundingClientRect();
-                    // If payment section is in viewport
-                    if (paymentRect.top < window.innerHeight && paymentRect.bottom > 0) {
-                        showSticky = false;
-                    }
-                }
-
-                if (showSticky) {
-                    stickyFooter.classList.add('visible');
-                } else {
-                    stickyFooter.classList.remove('visible');
-                }
-            } else {
-                stickyFooter.classList.remove('visible'); // Always hide on desktop
-            }
-        });
-    }
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
