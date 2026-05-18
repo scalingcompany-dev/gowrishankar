@@ -85,5 +85,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
     updateDynamicDeadline();
+
+    // 5. Automated Weekly Wednesday-Thursday Date Rollover
+    const updateWorkshopDate = () => {
+        // Calculate the upcoming Wednesday in IST (UTC + 5:30)
+        let nowUTC = new Date();
+        let offsetIST = 5.5 * 60 * 60 * 1000;
+        let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
+        
+        let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
+        let daysToWednesday = 3 - dayOfWeek;
+        
+        // Cutoff is Wednesday at 5:00 PM (17:00) IST
+        if (daysToWednesday < 0 || (daysToWednesday === 0 && nowIST.getHours() >= 17)) {
+            daysToWednesday += 7;
+        }
+        
+        let wednesdayDate = new Date(nowIST.getTime() + (daysToWednesday * 24 * 60 * 60 * 1000));
+        let thursdayDate = new Date(wednesdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
+        
+        // Force first workshop to be May 27 & 28, 2026 if calculated date is earlier
+        let minStartDate = new Date(Date.UTC(2026, 4, 27, 11, 30)); // May 27, 2026 5:00 PM IST (11:30 AM UTC)
+        if (wednesdayDate < minStartDate) {
+            wednesdayDate = new Date(Date.UTC(2026, 4, 27));
+            thursdayDate = new Date(Date.UTC(2026, 4, 28));
+        }
+        
+        const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        
+        let wedDay = wednesdayDate.getDate();
+        let wedMonth = monthNamesShort[wednesdayDate.getMonth()];
+        
+        let thuDay = thursdayDate.getDate();
+        let thuMonth = monthNamesShort[thursdayDate.getMonth()];
+        
+        // Format for landing page (includes days of week)
+        let formattedDateText = "";
+        if (wedMonth === thuMonth) {
+            formattedDateText = `${wedDay} & ${thuDay} ${wedMonth} (Wed & Thu)`;
+        } else {
+            formattedDateText = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth} (Wed & Thu)`;
+        }
+        
+        // Format for thank you page (excludes days of week)
+        let formattedDateTextThankYou = "";
+        if (wedMonth === thuMonth) {
+            formattedDateTextThankYou = `${wedDay} & ${thuDay} ${wedMonth}`;
+        } else {
+            formattedDateTextThankYou = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth}`;
+        }
+        
+        // Update all landing page date elements
+        const dateElements = document.querySelectorAll('.dynamic-workshop-date');
+        dateElements.forEach(el => {
+            if (el.classList.contains('no-days')) {
+                el.textContent = formattedDateTextThankYou;
+            } else {
+                el.textContent = formattedDateText;
+            }
+        });
+    };
+    updateWorkshopDate();
 });
 
