@@ -29,6 +29,29 @@ document.addEventListener('DOMContentLoaded', () => {
         faqItems[0].classList.add('active');
     }
 
+    // 3. Belief Flow Tab Toggle
+    const beliefTabs = document.querySelectorAll('.belief-tab');
+    const panelOld = document.getElementById('panelOld');
+    const panelNew = document.getElementById('panelNew');
+
+    beliefTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const targetTab = tab.getAttribute('data-tab');
+
+            // Update active tab styles
+            beliefTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // Show/hide panels
+            if (targetTab === 'old') {
+                panelOld.classList.remove('hidden');
+                panelNew.classList.add('hidden');
+            } else {
+                panelNew.classList.remove('hidden');
+                panelOld.classList.add('hidden');
+            }
+        });
+    });
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -46,4 +69,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // 4. Dynamic Urgency Deadline Updater (Today's Date)
+    const updateDynamicDeadline = () => {
+        const today = new Date();
+        const months = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const day = today.getDate();
+        const monthName = months[today.getMonth()];
+        
+        const formattedDate = `${day} ${monthName}`;
+        
+        const dateElements = document.querySelectorAll('.dynamic-today-date');
+        dateElements.forEach(el => {
+            el.textContent = formattedDate;
+        });
+    };
+    updateDynamicDeadline();
 });
+
