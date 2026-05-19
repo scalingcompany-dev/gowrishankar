@@ -509,18 +509,6 @@
             t.async = true;
             t.src = v;
 
-            // Fire Purchase after SDK fully loads
-            t.onload = function () {
-                fbq('track', 'Purchase', {
-                    value: 99.00,
-                    currency: 'INR',
-                    content_name: 'Telugu Manifestation Masterclass',
-                    content_type: 'product',
-                    content_category: 'Paid Workshop'
-                });
-                console.log('✅ Purchase Pixel Fired: ₹99 INR');
-            };
-
             s = b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t, s);
 
@@ -542,6 +530,23 @@
 </head>
 
 <body>
+
+    <!-- Purchase Pixel Event Script -->
+    <script>
+        if (typeof fbq === 'function') {
+            fbq('track', 'Purchase', {
+                value: 99.00,
+                currency: 'INR',
+                content_name: 'Telugu Manifestation Masterclass',
+                content_type: 'product',
+                content_category: 'Paid Workshop'
+            });
+
+            console.log('✅ Purchase Pixel Queued: ₹99 INR');
+        } else {
+            console.log('❌ fbq not loaded');
+        }
+    </script>
 
     <div class="glow-blob glow-blob-1"></div>
     <div class="glow-blob glow-blob-2"></div>
