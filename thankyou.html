@@ -520,27 +520,30 @@
     </style>
     <!-- Meta Pixel Code -->
     <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return; n = f.fbq = function () {
+                n.callMethod ?
+                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+            n.queue = []; t = b.createElement(e); t.async = !0;
+            t.src = v; s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
 
-    fbq('init', '1551152019910713');
-    fbq('track', 'PageView');
+        fbq('init', '1551152019910713');
+        fbq('track', 'PageView');
 
-    fbq('track', 'Purchase', {
-      value: 99,
-      currency: 'INR'
-    });
+        fbq('track', 'Purchase', {
+            value: 99,
+            currency: 'INR'
+        });
     </script>
 
     <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1551152019910713&ev=PageView&noscript=1"/>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1551152019910713&ev=PageView&noscript=1" />
     </noscript>
     <!-- End Meta Pixel Code -->
 </head>
@@ -558,7 +561,7 @@
                 <!-- Left Column (Desktop) / Top Avatar Bar (Mobile) -->
                 <div class="coach-column">
                     <div class="coach-photo-glow">
-                        <img src="Gowri sankar2.webp" alt="Gowri sankar" class="coach-img" loading="eager">
+                        <img src="Gowrishankar2.webp" alt="Gowri sankar" class="coach-img" loading="eager">
                     </div>
 
                     <!-- Appears only inside the flex row on mobile for high density above the fold -->
@@ -664,33 +667,33 @@
                 let nowUTC = new Date();
                 let offsetIST = 5.5 * 60 * 60 * 1000;
                 let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
-                
+
                 let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
                 let daysToWednesday = 3 - dayOfWeek;
-                
+
                 // Cutoff is Wednesday at 5:00 PM (17:00) IST
                 if (daysToWednesday < 0 || (daysToWednesday === 0 && nowIST.getHours() >= 17)) {
                     daysToWednesday += 7;
                 }
-                
+
                 let wednesdayDate = new Date(nowIST.getTime() + (daysToWednesday * 24 * 60 * 60 * 1000));
                 let thursdayDate = new Date(wednesdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
-                
+
                 // Force first workshop to be May 27 & 28, 2026 if calculated date is earlier
                 let minStartDate = new Date(Date.UTC(2026, 4, 27, 11, 30)); // May 27, 2026 5:00 PM IST (11:30 AM UTC)
                 if (wednesdayDate < minStartDate) {
                     wednesdayDate = new Date(Date.UTC(2026, 4, 27));
                     thursdayDate = new Date(Date.UTC(2026, 4, 28));
                 }
-                
+
                 const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                
+
                 let wedDay = wednesdayDate.getDate();
                 let wedMonth = monthNamesShort[wednesdayDate.getMonth()];
-                
+
                 let thuDay = thursdayDate.getDate();
                 let thuMonth = monthNamesShort[thursdayDate.getMonth()];
-                
+
                 // Format for thank you page (excludes days of week)
                 let formattedDateTextThankYou = "";
                 if (wedMonth === thuMonth) {
@@ -698,7 +701,7 @@
                 } else {
                     formattedDateTextThankYou = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth}`;
                 }
-                
+
                 // Update thank you page date elements
                 const dateElements = document.querySelectorAll('.dynamic-workshop-date');
                 dateElements.forEach(el => {
