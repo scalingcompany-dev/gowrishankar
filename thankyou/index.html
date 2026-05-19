@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Successful | Telugu Manifestation Masterclass</title>
+
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +25,6 @@
             --accent-secondary: #FF6600;
             --danger-red: #EF4444;
             --success-green: #25D366;
-            /* WhatsApp Green */
             --success-green-hover: #20BA56;
             --font-sans: 'Poppins', sans-serif;
             --font-heading: 'Sora', sans-serif;
@@ -51,7 +51,6 @@
             overflow-x: hidden;
         }
 
-        /* Ambient Glow Blobs */
         .glow-blob {
             position: absolute;
             width: 350px;
@@ -80,7 +79,6 @@
             max-width: 900px;
         }
 
-        /* Sleek Glassmorphic Main Card */
         .thankyou-card {
             background: rgba(17, 17, 22, 0.75);
             backdrop-filter: blur(20px);
@@ -109,7 +107,6 @@
             align-items: center;
         }
 
-        /* Left Column: Coach Portrait with Glow Ring */
         .coach-column {
             display: flex;
             flex-direction: column;
@@ -142,7 +139,6 @@
             filter: brightness(1.2) contrast(1.03);
         }
 
-        /* Right Column: Message & Details */
         .content-column {
             display: flex;
             flex-direction: column;
@@ -192,7 +188,6 @@
             margin-bottom: 24px;
         }
 
-        /* Schedule Details Grid */
         .schedule-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -256,7 +251,6 @@
             margin-top: 5px;
         }
 
-        /* Massive Pulsating WhatsApp CTA */
         .whatsapp-cta-btn {
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
             color: #FFFFFF;
@@ -294,22 +288,12 @@
             fill: #FFFFFF;
         }
 
-        .whatsapp-cta-btn .sub-cta-label {
-            display: block;
-            font-size: 0.72rem;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
-            margin-top: 1px;
-            text-transform: none;
-        }
-
         .whatsapp-btn-text {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
 
-        /* Pulse Animation */
         .pulse-whatsapp {
             animation: pulseGreen 2s infinite;
         }
@@ -328,7 +312,6 @@
             }
         }
 
-        /* Footer Text */
         .action-notice {
             color: rgba(255, 176, 0, 0.85);
             font-size: 0.78rem;
@@ -346,15 +329,10 @@
             flex-shrink: 0;
         }
 
-        /* =======================================================
-           MOBILE OPTIMIZATIONS (CTA ALWAYS VISIBLE ABOVE THE FOLD)
-           ======================================================= */
         @media (max-width: 768px) {
             body {
                 padding: 12px;
-                display: flex;
                 align-items: flex-start;
-                /* Align to top to save vertical height */
                 justify-content: center;
                 padding-top: 25px;
             }
@@ -365,10 +343,8 @@
                 box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
                 max-height: calc(100vh - 50px);
                 overflow: hidden;
-                /* Fits absolutely compact inside viewport */
             }
 
-            /* Compact layout grid: Photo avatar on the left, congrats text on the right */
             .thankyou-split {
                 grid-template-columns: 1fr;
                 gap: 12px;
@@ -400,7 +376,6 @@
                 object-position: center 10%;
             }
 
-            /* Display success details directly next to coach image to save vertical screen space */
             .coach-column-text {
                 display: flex;
                 flex-direction: column;
@@ -468,7 +443,6 @@
                 justify-content: center;
             }
 
-            /* High-impact mobile CTA button */
             .whatsapp-cta-btn {
                 padding: 12px 18px;
                 font-size: 0.9rem;
@@ -486,10 +460,6 @@
                 text-align: center;
             }
 
-            .whatsapp-cta-btn .sub-cta-label {
-                font-size: 0.65rem;
-            }
-
             .action-notice {
                 font-size: 0.68rem;
                 margin-top: 8px;
@@ -498,7 +468,6 @@
             }
         }
 
-        /* Tiny Screen Adjustment (i.e. iPhone SE) */
         @media (max-width: 360px) {
             .congrats-title {
                 font-size: 1.15rem;
@@ -518,33 +487,71 @@
             }
         }
     </style>
+
     <!-- Meta Pixel Code -->
     <script>
         !function (f, b, e, v, n, t, s) {
-            if (f.fbq) return; n = f.fbq = function () {
+            if (f.fbq) return;
+
+            n = f.fbq = function () {
                 n.callMethod ?
-                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments);
             };
-            if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-            n.queue = []; t = b.createElement(e); t.async = !0;
-            t.src = v; s = b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t, s)
-        }(window, document, 'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
+
+            if (!f._fbq) f._fbq = n;
+
+            n.push = n;
+            n.loaded = true;
+            n.version = '2.0';
+            n.queue = [];
+
+            t = b.createElement(e);
+            t.async = true;
+            t.src = v;
+
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+
+        }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
         fbq('init', '1551152019910713');
         fbq('track', 'PageView');
-        fbq('track', 'Purchase', {
-            value: 99,
-            currency: 'INR'
+
+        window.addEventListener('load', function () {
+            if (typeof fbq === 'function') {
+                fbq('track', 'Purchase', {
+                    value: 99.00,
+                    currency: 'INR',
+                    content_name: 'Telugu Manifestation Masterclass',
+                    content_category: 'Paid Workshop'
+                });
+
+                fbq('track', 'Lead', {
+                    value: 99.00,
+                    currency: 'INR',
+                    content_name: 'Telugu Manifestation Masterclass',
+                    content_category: 'Paid Workshop'
+                });
+
+                console.log('Meta Purchase + Lead Pixel Fired - ₹99');
+            } else {
+                console.log('fbq not found');
+            }
         });
     </script>
 
     <noscript>
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=1551152019910713&ev=PageView&noscript=1" />
+
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1551152019910713&ev=Purchase&cd[value]=99.00&cd[currency]=INR&noscript=1" />
+
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1551152019910713&ev=Lead&cd[value]=99.00&cd[currency]=INR&noscript=1" />
     </noscript>
     <!-- End Meta Pixel Code -->
+
 </head>
 
 <body>
@@ -557,39 +564,36 @@
 
             <div class="thankyou-split">
 
-                <!-- Left Column (Desktop) / Top Avatar Bar (Mobile) -->
                 <div class="coach-column">
                     <div class="coach-photo-glow">
                         <img src="../gowrishankar2.webp" alt="Gowri sankar" class="coach-img" loading="eager">
                     </div>
 
-                    <!-- Appears only inside the flex row on mobile for high density above the fold -->
                     <div class="coach-column-text">
                         <div class="success-badge">
-                            <span></span>REGISTRATION SUCCESSFULy
+                            <span></span>REGISTRATION SUCCESSFUL
                         </div>
                         <h1 class="congrats-title">Congratulations! You're In.</h1>
                     </div>
                 </div>
 
-                <!-- Right Column (Desktop) / Main Details & Button (Mobile) -->
                 <div class="content-column">
                     <p class="congrats-msg">
-                        Join the WhatsApp Group to stay updated regarding the workshop
+                        Join the WhatsApp Group to stay updated regarding the workshop.
                     </p>
 
-                    <!-- Date & Time Box -->
                     <div class="schedule-box">
                         <div class="schedule-item">
                             <div class="schedule-icon-wrap">
                                 <svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap: round; stroke-linejoin: round;">
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
                                     <line x1="16" y1="2" x2="16" y2="6" />
                                     <line x1="8" y1="2" x2="8" y2="6" />
                                     <line x1="3" y1="10" x2="21" y2="10" />
                                 </svg>
                             </div>
+
                             <div class="schedule-text">
                                 <span class="schedule-label">Date:</span>
                                 <span class="schedule-val dynamic-workshop-date no-days">27 & 28 May</span>
@@ -599,11 +603,12 @@
                         <div class="schedule-item">
                             <div class="schedule-icon-wrap">
                                 <svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2.5" stroke-linecap: round; stroke-linejoin: round;">
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10" />
                                     <polyline points="12 6 12 12 16 14" />
                                 </svg>
                             </div>
+
                             <div class="schedule-text">
                                 <span class="schedule-label">Time:</span>
                                 <span class="schedule-val">7:00 PM (IST)</span>
@@ -618,24 +623,24 @@
                                         d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
                                 </svg>
                             </div>
+
                             <div class="schedule-text">
                                 <span class="schedule-label" style="color: #2D8CFF;">Platform:</span>
-                                <span class="schedule-val" style="color: #2D8CFF; font-weight: 800;">LIVE ON ZOOM
-                                    (TELUGU)</span>
+                                <span class="schedule-val" style="color: #2D8CFF; font-weight: 800;">
+                                    LIVE ON ZOOM (TELUGU)
+                                </span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Pulsating WhatsApp CTA -->
                     <a href="#" class="whatsapp-cta-btn pulse-whatsapp">
                         <svg class="whatsapp-icon" viewBox="0 0 24 24">
                             <path
                                 d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.6.95 3.178 1.45 4.773 1.451 5.485 0 9.948-4.461 9.951-9.946.002-2.657-1.026-5.155-2.897-7.029C16.544 1.758 14.049.73 11.4.73 5.918.73 1.456 5.19 1.453 10.675c-.002 1.699.446 3.36 1.3 4.801l-.988 3.605 3.693-.969zm13.14-5.91c-.302-.15-1.785-.882-2.062-1.002-.278-.11-.482-.16-.684.15-.202.3-.781.982-.958 1.182-.178.201-.355.226-.657.076-.302-.15-1.276-.47-2.43-1.499-.896-.8-1.5-1.788-1.276-2.088.178-.201.202-.34.303-.506.1-.165.05-.302-.025-.452-.075-.15-.684-1.65-.937-2.26-.247-.59-.5-.51-.684-.52-.177-.01-.38-.01-.584-.01-.202 0-.532.075-.81.38-.278.3-1.063 1.04-1.063 2.538 0 1.498 1.088 2.943 1.24 3.143.152.201 2.142 3.27 5.19 4.588.725.313 1.291.5 1.733.64.728.23 1.39.197 1.913.12.584-.087 1.785-.73 2.039-1.432.253-.703.253-1.305.177-1.43-.076-.125-.278-.2-.58-.35z" />
                         </svg>
+
                         <div class="whatsapp-btn-text">
                             <span>JOIN THE WHATSAPP GROUP NOW</span>
-                            <!-- <span class="sub-cta-label">Click here to get the Live Zoom link & masterclass updates
-                                instantly</span> -->
                         </div>
                     </a>
 
@@ -647,6 +652,7 @@
                             <line x1="12" y1="9" x2="12" y2="13" />
                             <line x1="12" y1="17" x2="12.01" y2="17" />
                         </svg>
+
                         IMPORTANT: Zoom Links & Bonuses will only be shared in the WhatsApp Group!
                     </div>
 
@@ -659,17 +665,14 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Automated Weekly Wednesday-Thursday Date Rollover
             const updateWorkshopDate = () => {
-                // Calculate the upcoming Wednesday in IST (UTC + 5:30)
                 let nowUTC = new Date();
                 let offsetIST = 5.5 * 60 * 60 * 1000;
                 let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
 
-                let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
+                let dayOfWeek = nowIST.getDay();
                 let daysToWednesday = 3 - dayOfWeek;
 
-                // Cutoff is Wednesday at 5:00 PM (17:00) IST
                 if (daysToWednesday < 0 || (daysToWednesday === 0 && nowIST.getHours() >= 17)) {
                     daysToWednesday += 7;
                 }
@@ -677,8 +680,8 @@
                 let wednesdayDate = new Date(nowIST.getTime() + (daysToWednesday * 24 * 60 * 60 * 1000));
                 let thursdayDate = new Date(wednesdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
 
-                // Force first workshop to be May 27 & 28, 2026 if calculated date is earlier
-                let minStartDate = new Date(Date.UTC(2026, 4, 27, 11, 30)); // May 27, 2026 5:00 PM IST (11:30 AM UTC)
+                let minStartDate = new Date(Date.UTC(2026, 4, 27, 11, 30));
+
                 if (wednesdayDate < minStartDate) {
                     wednesdayDate = new Date(Date.UTC(2026, 4, 27));
                     thursdayDate = new Date(Date.UTC(2026, 4, 28));
@@ -692,23 +695,25 @@
                 let thuDay = thursdayDate.getDate();
                 let thuMonth = monthNamesShort[thursdayDate.getMonth()];
 
-                // Format for thank you page (excludes days of week)
                 let formattedDateTextThankYou = "";
+
                 if (wedMonth === thuMonth) {
                     formattedDateTextThankYou = `${wedDay} & ${thuDay} ${wedMonth}`;
                 } else {
                     formattedDateTextThankYou = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth}`;
                 }
 
-                // Update thank you page date elements
                 const dateElements = document.querySelectorAll('.dynamic-workshop-date');
+
                 dateElements.forEach(el => {
                     el.textContent = formattedDateTextThankYou;
                 });
             };
+
             updateWorkshopDate();
         });
     </script>
+
 </body>
 
 </html>
