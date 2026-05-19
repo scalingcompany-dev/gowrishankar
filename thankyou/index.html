@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thankyou</title>
+    <title>Congratulations</title>
 
     <!-- Premium Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -489,12 +489,11 @@
     </style>
 
     <!-- Meta Pixel Base Code -->
-    <!-- Meta Pixel Code -->
     <script>
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return; n = f.fbq = function () {
                 n.callMethod ?
-                n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
             };
             if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
             n.queue = []; t = b.createElement(e); t.async = !0;
@@ -504,16 +503,10 @@
             'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '1551152019910713');
         fbq('track', 'PageView');
-        fbq('track', 'Purchase', { value: 99, currency: 'INR' });
     </script>
-    <noscript><img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1551152019910713&ev=PageView&noscript=1" /></noscript>
-    <!-- End Meta Pixel Code -->
-
     <noscript>
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=1551152019910713&ev=PageView&noscript=1" />
-
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=1551152019910713&ev=Purchase&cd[value]=99.00&cd[currency]=INR&noscript=1" />
     </noscript>
@@ -522,6 +515,20 @@
 </head>
 
 <body>
+    <!-- Track Purchase Event -->
+    <script>
+        try {
+            fbq('track', 'Purchase', {
+                value: 99.00,
+                currency: 'INR',
+                content_name: 'Telugu Millionaire Manifestation Masterclass',
+                content_type: 'product'
+            });
+            console.log("✅ Meta Pixel: Purchase Event tracked (₹99 INR)");
+        } catch (e) {
+            console.error("❌ Meta Pixel: Error tracking Purchase Event:", e);
+        }
+    </script>
 
     <div class="glow-blob glow-blob-1"></div>
     <div class="glow-blob glow-blob-2"></div>
