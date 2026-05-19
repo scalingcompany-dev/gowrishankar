@@ -488,7 +488,7 @@
         }
     </style>
 
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Base Code -->
     <script>
         !function (f, b, e, v, n, t, s) {
             if (f.fbq) return;
@@ -516,28 +516,6 @@
 
         fbq('init', '1551152019910713');
         fbq('track', 'PageView');
-
-        window.addEventListener('load', function () {
-            if (typeof fbq === 'function') {
-                fbq('track', 'Purchase', {
-                    value: 99.00,
-                    currency: 'INR',
-                    content_name: 'Telugu Manifestation Masterclass',
-                    content_category: 'Paid Workshop'
-                });
-
-                fbq('track', 'Lead', {
-                    value: 99.00,
-                    currency: 'INR',
-                    content_name: 'Telugu Manifestation Masterclass',
-                    content_category: 'Paid Workshop'
-                });
-
-                console.log('Meta Purchase + Lead Pixel Fired - ₹99');
-            } else {
-                console.log('fbq not found');
-            }
-        });
     </script>
 
     <noscript>
@@ -546,11 +524,8 @@
 
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=1551152019910713&ev=Purchase&cd[value]=99.00&cd[currency]=INR&noscript=1" />
-
-        <img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1551152019910713&ev=Lead&cd[value]=99.00&cd[currency]=INR&noscript=1" />
     </noscript>
-    <!-- End Meta Pixel Code -->
+    <!-- End Meta Pixel Base Code -->
 
 </head>
 
@@ -566,7 +541,7 @@
 
                 <div class="coach-column">
                     <div class="coach-photo-glow">
-                        <img src="../gowrishankar2.webp" alt="Gowri sankar" class="coach-img" loading="eager">
+                        <img src="../gowrishankar2.webp" alt="Gowri Sankar" class="coach-img" loading="eager">
                     </div>
 
                     <div class="coach-column-text">
@@ -663,6 +638,7 @@
         </div>
     </div>
 
+    <!-- Dynamic Workshop Date Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const updateWorkshopDate = () => {
@@ -711,6 +687,27 @@
             };
 
             updateWorkshopDate();
+        });
+    </script>
+
+    <!-- Purchase Pixel Event Script -->
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                if (typeof fbq === 'function') {
+                    fbq('track', 'Purchase', {
+                        value: 99.00,
+                        currency: 'INR',
+                        content_name: 'Telugu Manifestation Masterclass',
+                        content_type: 'product',
+                        content_category: 'Paid Workshop'
+                    });
+
+                    console.log('✅ Purchase Pixel Fired: ₹99 INR');
+                } else {
+                    console.log('❌ fbq not loaded');
+                }
+            }, 1500);
         });
     </script>
 
