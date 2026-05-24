@@ -551,7 +551,7 @@
 
                             <div class="schedule-text">
                                 <span class="schedule-label">Date:</span>
-                                <span class="schedule-val dynamic-workshop-date no-days">27 & 28 May</span>
+                                <span class="schedule-val dynamic-workshop-date no-days">2 & 3 Jun</span>
                             </div>
                         </div>
 
@@ -637,11 +637,19 @@
                 let wednesdayDate = new Date(nowIST.getTime() + (daysToWednesday * 24 * 60 * 60 * 1000));
                 let thursdayDate = new Date(wednesdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
 
-                let minStartDate = new Date(Date.UTC(2026, 4, 27, 11, 30));
-
+                // Force first workshop to be May 27 & 28, 2026 if calculated date is earlier
+                let minStartDate = new Date(2026, 4, 27); // May 27, 2026 local
                 if (wednesdayDate < minStartDate) {
-                    wednesdayDate = new Date(Date.UTC(2026, 4, 27));
-                    thursdayDate = new Date(Date.UTC(2026, 4, 28));
+                    wednesdayDate = new Date(2026, 4, 27);
+                    thursdayDate = new Date(2026, 4, 28);
+                }
+
+                // Special override for June 2 & 3, 2026 workshop
+                // Cutoff for this override is Wednesday, June 3, 2026 at 5:00 PM IST (17:00 IST, which is 11:30 AM UTC)
+                let juneOverrideCutoff = new Date("2026-06-03T17:00:00+05:30");
+                if (nowUTC < juneOverrideCutoff) {
+                    wednesdayDate = new Date(2026, 5, 2); // June 2, 2026
+                    thursdayDate = new Date(2026, 5, 3);  // June 3, 2026
                 }
 
                 const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];

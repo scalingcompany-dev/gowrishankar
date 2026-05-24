@@ -105,26 +105,37 @@ document.addEventListener('DOMContentLoaded', () => {
         let thursdayDate = new Date(wednesdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
         
         // Force first workshop to be May 27 & 28, 2026 if calculated date is earlier
-        let minStartDate = new Date(Date.UTC(2026, 4, 27, 11, 30)); // May 27, 2026 5:00 PM IST (11:30 AM UTC)
+        let minStartDate = new Date(2026, 4, 27); // May 27, 2026 local
         if (wednesdayDate < minStartDate) {
-            wednesdayDate = new Date(Date.UTC(2026, 4, 27));
-            thursdayDate = new Date(Date.UTC(2026, 4, 28));
+            wednesdayDate = new Date(2026, 4, 27);
+            thursdayDate = new Date(2026, 4, 28);
+        }
+        
+        // Special override for June 2 & 3, 2026 workshop
+        // Cutoff for this override is Wednesday, June 3, 2026 at 5:00 PM IST (17:00 IST, which is 11:30 AM UTC)
+        let juneOverrideCutoff = new Date("2026-06-03T17:00:00+05:30");
+        if (nowUTC < juneOverrideCutoff) {
+            wednesdayDate = new Date(2026, 5, 2); // June 2, 2026
+            thursdayDate = new Date(2026, 5, 3);  // June 3, 2026
         }
         
         const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         
         let wedDay = wednesdayDate.getDate();
         let wedMonth = monthNamesShort[wednesdayDate.getMonth()];
+        let wedDayName = dayNamesShort[wednesdayDate.getDay()];
         
         let thuDay = thursdayDate.getDate();
         let thuMonth = monthNamesShort[thursdayDate.getMonth()];
+        let thuDayName = dayNamesShort[thursdayDate.getDay()];
         
         // Format for landing page (includes days of week)
         let formattedDateText = "";
         if (wedMonth === thuMonth) {
-            formattedDateText = `${wedDay} & ${thuDay} ${wedMonth} (Wed & Thu)`;
+            formattedDateText = `${wedDay} & ${thuDay} ${wedMonth} (${wedDayName} & ${thuDayName})`;
         } else {
-            formattedDateText = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth} (Wed & Thu)`;
+            formattedDateText = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth} (${wedDayName} & ${thuDayName})`;
         }
         
         // Format for thank you page (excludes days of week)
