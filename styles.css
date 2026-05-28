@@ -2847,7 +2847,46 @@ ul {
     margin-bottom: 28px;
     padding-bottom: 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    gap: 8px;
+    gap: 12px;
+}
+
+.ba-header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin-bottom: 4px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.old-header-icon {
+    background: rgba(239, 68, 68, 0.03);
+    border-color: rgba(239, 68, 68, 0.15);
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.05);
+}
+
+.new-header-icon {
+    background: rgba(16, 185, 129, 0.03);
+    border-color: rgba(16, 185, 129, 0.15);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.05);
+}
+
+.ba-old:hover .old-header-icon {
+    transform: scale(1.08) rotate(-3deg);
+    border-color: rgba(239, 68, 68, 0.45);
+    box-shadow: 0 0 30px rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.06);
+}
+
+.ba-new:hover .new-header-icon {
+    transform: scale(1.08) rotate(3deg);
+    border-color: rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
+    background: rgba(16, 185, 129, 0.06);
 }
 
 .ba-badge-locked {
