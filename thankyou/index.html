@@ -644,12 +644,12 @@
                     thursdayDate = new Date(2026, 4, 28);
                 }
 
-                // Special override for June 2 & 3, 2026 workshop
-                // Cutoff for this override is Wednesday, June 3, 2026 at 5:00 PM IST (17:00 IST, which is 11:30 AM UTC)
-                let juneOverrideCutoff = new Date("2026-06-03T17:00:00+05:30");
+                // Special override for June 6 & 7, 2026 workshop (this time alone)
+                // Cutoff for this override is Sunday, June 7, 2026 at 5:00 PM IST (17:00 IST, which is 11:30 AM UTC)
+                let juneOverrideCutoff = new Date("2026-06-07T17:00:00+05:30");
                 if (nowUTC < juneOverrideCutoff) {
-                    wednesdayDate = new Date(2026, 5, 2); // June 2, 2026
-                    thursdayDate = new Date(2026, 5, 3);  // June 3, 2026
+                    wednesdayDate = new Date(2026, 5, 6); // June 6, 2026
+                    thursdayDate = new Date(2026, 5, 7);  // June 7, 2026
                 }
 
                 const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
