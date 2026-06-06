@@ -86,64 +86,52 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     updateDynamicDeadline();
 
-    // 5. Automated Weekly Wednesday-Thursday Date Rollover
+    // 5. Automated Weekly Saturday-Sunday Date Rollover
     const updateWorkshopDate = () => {
-        // Calculate the upcoming Wednesday in IST (UTC + 5:30)
+        // Calculate the upcoming Saturday in IST (UTC + 5:30)
         let nowUTC = new Date();
         let offsetIST = 5.5 * 60 * 60 * 1000;
         let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
         
         let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
-        let daysToWednesday = 3 - dayOfWeek;
+        let daysToSaturday = 6 - dayOfWeek;
         
-        // Cutoff is Wednesday at 5:00 PM (17:00) IST
-        if (daysToWednesday < 0 || (daysToWednesday === 0 && nowIST.getHours() >= 17)) {
-            daysToWednesday += 7;
+        // Cutoff is Saturday at 10:00 AM IST
+        if (dayOfWeek === 6 && nowIST.getHours() >= 10) {
+            daysToSaturday += 7;
+        } else if (dayOfWeek === 0) {
+            // If today is Sunday, the current workshop has already started/passed. Show next week's.
+            daysToSaturday = 6;
         }
         
-        let wednesdayDate = new Date(nowIST.getTime() + (daysToWednesday * 24 * 60 * 60 * 1000));
-        let thursdayDate = new Date(wednesdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
-        
-        // Force first workshop to be May 27 & 28, 2026 if calculated date is earlier
-        let minStartDate = new Date(2026, 4, 27); // May 27, 2026 local
-        if (wednesdayDate < minStartDate) {
-            wednesdayDate = new Date(2026, 4, 27);
-            thursdayDate = new Date(2026, 4, 28);
-        }
-        
-        // Special override for June 6 & 7, 2026 workshop (this time alone)
-        // Cutoff for this override is Sunday, June 7, 2026 at 5:00 PM IST (17:00 IST, which is 11:30 AM UTC)
-        let juneOverrideCutoff = new Date("2026-06-07T17:00:00+05:30");
-        if (nowUTC < juneOverrideCutoff) {
-            wednesdayDate = new Date(2026, 5, 6); // June 6, 2026
-            thursdayDate = new Date(2026, 5, 7);  // June 7, 2026
-        }
+        let saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
+        let sundayDate = new Date(saturdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
         
         const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
         
-        let wedDay = wednesdayDate.getDate();
-        let wedMonth = monthNamesShort[wednesdayDate.getMonth()];
-        let wedDayName = dayNamesShort[wednesdayDate.getDay()];
+        let satDay = saturdayDate.getDate();
+        let satMonth = monthNamesShort[saturdayDate.getMonth()];
+        let satDayName = dayNamesShort[saturdayDate.getDay()];
         
-        let thuDay = thursdayDate.getDate();
-        let thuMonth = monthNamesShort[thursdayDate.getMonth()];
-        let thuDayName = dayNamesShort[thursdayDate.getDay()];
+        let sunDay = sundayDate.getDate();
+        let sunMonth = monthNamesShort[sundayDate.getMonth()];
+        let sunDayName = dayNamesShort[sundayDate.getDay()];
         
         // Format for landing page (includes days of week)
         let formattedDateText = "";
-        if (wedMonth === thuMonth) {
-            formattedDateText = `${wedDay} & ${thuDay} ${wedMonth} (${wedDayName} & ${thuDayName})`;
+        if (satMonth === sunMonth) {
+            formattedDateText = `${satDay} & ${sunDay} ${satMonth} (${satDayName} & ${sunDayName})`;
         } else {
-            formattedDateText = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth} (${wedDayName} & ${thuDayName})`;
+            formattedDateText = `${satDay} ${satMonth} & ${sunDay} ${sunMonth} (${satDayName} & ${sunDayName})`;
         }
         
         // Format for thank you page (excludes days of week)
         let formattedDateTextThankYou = "";
-        if (wedMonth === thuMonth) {
-            formattedDateTextThankYou = `${wedDay} & ${thuDay} ${wedMonth}`;
+        if (satMonth === sunMonth) {
+            formattedDateTextThankYou = `${satDay} & ${sunDay} ${satMonth}`;
         } else {
-            formattedDateTextThankYou = `${wedDay} ${wedMonth} & ${thuDay} ${thuMonth}`;
+            formattedDateTextThankYou = `${satDay} ${satMonth} & ${sunDay} ${sunMonth}`;
         }
         
         // Update all landing page date elements
