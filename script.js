@@ -96,8 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
         let daysToSaturday = 6 - dayOfWeek;
         
-        // Cutoff is Saturday at 10:00 AM IST
-        if (dayOfWeek === 6 && nowIST.getHours() >= 10) {
+        // Cutoff is Saturday at 6:00 PM (18:00) IST
+        if (dayOfWeek === 6 && nowIST.getHours() >= 18) {
             daysToSaturday += 7;
         } else if (dayOfWeek === 0) {
             // If today is Sunday, the current workshop has already started/passed. Show next week's.
