@@ -105,6 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         let saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
+        
+        // Skip June 13, 2026 batch as requested (rollover to the next week instead)
+        if (saturdayDate.getFullYear() === 2026 && saturdayDate.getMonth() === 5 && saturdayDate.getDate() === 13) {
+            saturdayDate = new Date(saturdayDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+        }
+        
         let sundayDate = new Date(saturdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
         
         const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
