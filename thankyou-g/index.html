@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="te">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations</title>
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Google Tag / Pixel Code Placeholder (Add your Google tracking tag here) -->
+
+    <style>
+        :root {
+            --bg-dark: #05050A;
+            --bg-dark-alt: #0A0A10;
+            --card-bg: #111116;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent-primary: #FFB000;
+            --accent-primary-hover: #FF9900;
+            --accent-secondary: #FF6600;
+            --danger-red: #EF4444;
+            --success-green: #25D366;
+            --success-green-hover: #20BA56;
+            --font-sans: 'Poppins', sans-serif;
+            --font-heading: 'Sora', sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 16px;
+            --radius-lg: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #05050A 0%, #0A0A15 50%, #121225 100%);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .glow-blob {
+            position: absolute;
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 176, 0, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow-blob-1 {
+            top: -10%;
+            left: -10%;
+        }
+
+        .glow-blob-2 {
+            bottom: -10%;
+            right: -10%;
+            background: radial-gradient(circle, rgba(255, 102, 0, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+        }
+
+        .thankyou-wrapper {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .thankyou-card {
+            background: rgba(17, 17, 22, 0.75);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 176, 0, 0.15);
+            border-radius: var(--radius-lg);
+            padding: 45px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 176, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .thankyou-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+        }
+
+        .thankyou-split {
+            display: grid;
+            grid-template-columns: 1.1fr 1.9fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .coach-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coach-photo-glow {
+            position: relative;
+            width: 260px;
+            height: 310px;
+            border-radius: 20px;
+            padding: 4px;
+            background: linear-gradient(135deg, rgba(255, 176, 0, 0.4) 0%, rgba(255, 102, 0, 0.1) 100%);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 176, 0, 0.15);
+            transition: transform 0.4s ease;
+        }
+
+        .coach-photo-glow:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(255, 176, 0, 0.25);
+        }
+
+        .coach-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center 10%;
+            border-radius: 16px;
+            filter: brightness(1.2) contrast(1.03);
+        }
+
+        .content-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .success-badge {
+            background: rgba(37, 211, 102, 0.15);
+            color: var(--success-green);
+            border: 1px solid rgba(37, 211, 102, 0.3);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .success-badge span {
+            width: 6px;
+            height: 6px;
+            background-color: var(--success-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--success-green);
+        }
+
+        .congrats-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 12px;
+            background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .congrats-msg {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .schedule-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            width: 100%;
+            margin-bottom: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .schedule-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .schedule-icon-wrap {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 176, 0, 0.08);
+            border: 1px solid rgba(255, 176, 0, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--accent-primary);
+        }
+
+        .schedule-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .schedule-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .schedule-label {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .schedule-val {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-top: 1px;
+        }
+
+        .schedule-item.full-width {
+            grid-column: span 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 12px;
+            margin-top: 5px;
+        }
+
+        .whatsapp-cta-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #FFFFFF;
+            width: 100%;
+            text-decoration: none;
+            padding: 16px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 1.05rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: none;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .whatsapp-cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(37, 211, 102, 0.45);
+            filter: brightness(1.08);
+        }
+
+        .whatsapp-cta-btn:active {
+            transform: translateY(1px);
+        }
+
+        .whatsapp-cta-btn .whatsapp-icon {
+            width: 24px;
+            height: 24px;
+            fill: #FFFFFF;
+        }
+
+        .whatsapp-btn-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .pulse-whatsapp {
+            animation: pulseGreen 2s infinite;
+        }
+
+        @keyframes pulseGreen {
+            0% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5);
+            }
+
+            70% {
+                box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+
+        .action-notice {
+            color: rgba(255, 176, 0, 0.85);
+            font-size: 0.78rem;
+            font-weight: 600;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            line-height: 1.4;
+        }
+
+        .action-notice svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                align-items: flex-start;
+                justify-content: center;
+                padding-top: 25px;
+            }
+
+            .thankyou-card {
+                padding: 20px 18px 24px 18px;
+                border-radius: var(--radius-md);
+                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.9);
+                max-height: calc(100vh - 50px);
+                overflow: hidden;
+            }
+
+            .thankyou-split {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .coach-column {
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+                padding-bottom: 10px;
+                margin-bottom: 0px;
+                width: 100%;
+            }
+
+            .coach-photo-glow {
+                width: 70px;
+                height: 70px;
+                border-radius: 50%;
+                padding: 2px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 176, 0, 0.2);
+                background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+                flex-shrink: 0;
+            }
+
+            .coach-img {
+                border-radius: 50%;
+                object-position: center 10%;
+            }
+
+            .coach-column-text {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .success-badge {
+                margin-bottom: 4px;
+                padding: 4px 10px;
+                font-size: 0.65rem;
+            }
+
+            .congrats-title {
+                font-size: 1.3rem;
+                margin-bottom: 0;
+                text-align: center;
+            }
+
+            .content-column {
+                width: 100%;
+                align-items: center;
+            }
+
+            .congrats-msg {
+                font-size: 0.78rem;
+                line-height: 1.5;
+                margin-bottom: 12px;
+                text-align: center;
+            }
+
+            .schedule-box {
+                padding: 10px;
+                margin-bottom: 12px;
+                gap: 8px;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .schedule-item {
+                justify-content: center;
+            }
+
+            .schedule-icon-wrap {
+                width: 28px;
+                height: 28px;
+                border-radius: 6px;
+            }
+
+            .schedule-icon {
+                width: 12px;
+                height: 12px;
+            }
+
+            .schedule-label {
+                font-size: 0.58rem;
+            }
+
+            .schedule-val {
+                font-size: 0.7rem;
+            }
+
+            .schedule-item.full-width {
+                padding-top: 6px;
+                margin-top: 2px;
+                justify-content: center;
+            }
+
+            .whatsapp-cta-btn {
+                padding: 12px 18px;
+                font-size: 0.9rem;
+                border-radius: var(--radius-sm);
+                justify-content: center;
+            }
+
+            .whatsapp-cta-btn .whatsapp-icon {
+                width: 18px;
+                height: 18px;
+            }
+
+            .whatsapp-btn-text {
+                align-items: center;
+                text-align: center;
+            }
+
+            .action-notice {
+                font-size: 0.68rem;
+                margin-top: 8px;
+                justify-content: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .congrats-title {
+                font-size: 1.15rem;
+            }
+
+            .coach-photo-glow {
+                width: 60px;
+                height: 60px;
+            }
+
+            .schedule-box {
+                grid-template-columns: 1fr;
+            }
+
+            .schedule-item.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="glow-blob glow-blob-1"></div>
+    <div class="glow-blob glow-blob-2"></div>
+
+    <div class="thankyou-wrapper">
+        <div class="thankyou-card">
+
+            <div class="thankyou-split">
+
+                <div class="coach-column">
+                    <div class="coach-photo-glow">
+                        <img src="../gowrishankar2.webp" alt="Gowrisankar Singareddy" class="coach-img" loading="eager">
+                    </div>
+
+                    <div class="coach-column-text">
+                        <div class="success-badge">
+                            <span></span>REGISTRATION SUCCESSFUL
+                        </div>
+                        <h1 class="congrats-title">Congratulations! You're In.</h1>
+                    </div>
+                </div>
+
+                <div class="content-column">
+                    <p class="congrats-msg">
+                        Join the WhatsApp Group to stay updated regarding the workshop.
+                    </p>
+
+                    <div class="schedule-box">
+                        <div class="schedule-item">
+                            <div class="schedule-icon-wrap">
+                                <svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                                    <line x1="16" y1="2" x2="16" y2="6" />
+                                    <line x1="8" y1="2" x2="8" y2="6" />
+                                    <line x1="3" y1="10" x2="21" y2="10" />
+                                </svg>
+                            </div>
+
+                            <div class="schedule-text">
+                                <span class="schedule-label">Date:</span>
+                                <span class="schedule-val dynamic-workshop-date no-days">13 & 14 Jun</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-item">
+                            <div class="schedule-icon-wrap">
+                                <svg class="schedule-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
+                                </svg>
+                            </div>
+
+                            <div class="schedule-text">
+                                <span class="schedule-label">Time:</span>
+                                <span class="schedule-val">7:00 PM (IST)</span>
+                            </div>
+                        </div>
+
+                        <div class="schedule-item full-width">
+                            <div class="schedule-icon-wrap"
+                                style="background: rgba(45, 140, 255, 0.08); border-color: rgba(45, 140, 255, 0.2); color: #2D8CFF;">
+                                <svg class="schedule-icon" viewBox="0 0 24 24" fill="currentColor">
+                                    <path
+                                        d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z" />
+                                </svg>
+                            </div>
+
+                            <div class="schedule-text">
+                                <span class="schedule-label" style="color: #2D8CFF;">Platform:</span>
+                                <span class="schedule-val" style="color: #2D8CFF; font-weight: 800;">
+                                    LIVE ON ZOOM (TELUGU)
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://chat.whatsapp.com/JdeIMpfWTob0hTJ1am7sfn" class="whatsapp-cta-btn pulse-whatsapp"
+                        target="_blank" rel="noopener noreferrer">
+                        <svg class="whatsapp-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.458L0 24zm6.59-4.846c1.6.95 3.178 1.45 4.773 1.451 5.485 0 9.948-4.461 9.951-9.946.002-2.657-1.026-5.155-2.897-7.029C16.544 1.758 14.049.73 11.4.73 5.918.73 1.456 5.19 1.453 10.675c-.002 1.699.446 3.36 1.3 4.801l-.988 3.605 3.693-.969zm13.14-5.91c-.302-.15-1.785-.882-2.062-1.002-.278-.11-.482-.16-.684.15-.202.3-.781.982-.958 1.182-.178.201-.355.226-.657.076-.302-.15-1.276-.47-2.43-1.499-.896-.8-1.5-1.788-1.276-2.088.178-.201.202-.34.303-.506.1-.165.05-.302-.025-.452-.075-.15-.684-1.65-.937-2.26-.247-.59-.5-.51-.684-.52-.177-.01-.38-.01-.584-.01-.202 0-.532.075-.81.38-.278.3-1.063 1.04-1.063 2.538 0 1.498 1.088 2.943 1.24 3.143.152.201 2.142 3.27 5.19 4.588.725.313 1.291.5 1.733.64.728.23 1.39.197 1.913.12.584-.087 1.785-.73 2.039-1.432.253-.703.253-1.305.177-1.43-.076-.125-.278-.2-.58-.35z" />
+                        </svg>
+
+                        <div class="whatsapp-btn-text">
+                            <span>JOIN THE WHATSAPP GROUP NOW</span>
+                        </div>
+                    </a>
+
+                    <div class="action-notice">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                            <line x1="12" y1="9" x2="12" y2="13" />
+                            <line x1="12" y1="17" x2="12.01" y2="17" />
+                        </svg>
+
+                        IMPORTANT: Zoom Links & Bonuses will only be shared in the WhatsApp Group!
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Dynamic Workshop Date Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const updateWorkshopDate = () => {
+                let nowUTC = new Date();
+                let offsetIST = 5.5 * 60 * 60 * 1000;
+                let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
+
+                let dayOfWeek = nowIST.getDay();
+                let daysToSaturday = 6 - dayOfWeek;
+
+                // Cutoff is Saturday at 6:00 PM (18:00) IST
+                if (dayOfWeek === 6 && nowIST.getHours() >= 18) {
+                    daysToSaturday += 7;
+                } else if (dayOfWeek === 0) {
+                    // If today is Sunday, the current workshop has already started/passed. Show next week's.
+                    daysToSaturday = 6;
+                }
+
+                let saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
+
+                // Skip June 13, 2026 batch as requested (rollover to the next week instead)
+                if (saturdayDate.getFullYear() === 2026 && saturdayDate.getMonth() === 5 && saturdayDate.getDate() === 13) {
+                    saturdayDate = new Date(saturdayDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                }
+
+                let sundayDate = new Date(saturdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
+
+                const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+                let satDay = saturdayDate.getDate();
+                let satMonth = monthNamesShort[saturdayDate.getMonth()];
+
+                let sunDay = sundayDate.getDate();
+                let sunMonth = monthNamesShort[sundayDate.getMonth()];
+
+                let formattedDateTextThankYou = "";
+
+                if (satMonth === sunMonth) {
+                    formattedDateTextThankYou = `${satDay} & ${sunDay} ${satMonth}`;
+                } else {
+                    formattedDateTextThankYou = `${satDay} ${satMonth} & ${sunDay} ${sunMonth}`;
+                }
+
+                const dateElements = document.querySelectorAll('.dynamic-workshop-date');
+
+                dateElements.forEach(el => {
+                    el.textContent = formattedDateTextThankYou;
+                });
+            };
+
+            updateWorkshopDate();
+        });
+    </script>
+
+
+
+</body>
+
+</html>
