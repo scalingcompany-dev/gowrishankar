@@ -4,13 +4,13 @@
 // Enable Realtime Database in your Firebase Console.
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  databaseURL: "https://YOUR_PROJECT_ID-default-rtdb.firebaseio.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyAiTNPbPZYz37fOZicSDPU2uP_HRWof7Xk",
+  authDomain: "day-millionaire-manifest.firebaseapp.com",
+  databaseURL: "https://day-millionaire-manifest-default-rtdb.firebaseio.com", // Note: If your database is in Asia or Europe, double check this URL in the Firebase Console!
+  projectId: "day-millionaire-manifest",
+  storageBucket: "day-millionaire-manifest.firebasestorage.app",
+  messagingSenderId: "163913723937",
+  appId: "1:163913723937:web:decd8fdb4992537baa3360"
 };
 
 // Passcode to secure the Admin Panel dashboard. Feel free to change this!
