@@ -426,7 +426,19 @@
             }
 
             var variant = localStorage.getItem('ab_variant');
-            
+            var cachedSplit = localStorage.getItem('traffic_split_a');
+            var splitA = (cachedSplit !== null) ? parseInt(cachedSplit, 10) : 50;
+            if (isNaN(splitA)) splitA = 50;
+
+            // Force override if a variant is completely disabled in cache
+            if (splitA === 0 && variant !== 'B') {
+                variant = 'B';
+                localStorage.setItem('ab_variant', 'B');
+            } else if (splitA === 100 && variant !== 'A') {
+                variant = 'A';
+                localStorage.setItem('ab_variant', 'A');
+            }
+
             function applyVariant(assigned) {
                 if (assigned === 'A') {
                     var targetUrl = 'index.html' + window.location.search;
@@ -437,8 +449,14 @@
                     document.addEventListener('DOMContentLoaded', function() {
                         if (window.dbHelper && window.dbHelper.isConfigured()) {
                             window.dbHelper.trackView('B');
-                            window.dbHelper.getTrafficSplit(function(splitA) {
-                                localStorage.setItem('traffic_split_a', splitA);
+                            window.dbHelper.getTrafficSplit(function(newSplitA) {
+                                localStorage.setItem('traffic_split_a', newSplitA);
+                                // If database shows B is disabled (100% split for A), redirect to A immediately
+                                if (newSplitA === 100) {
+                                    localStorage.setItem('ab_variant', 'A');
+                                    var targetUrl = 'index.html' + window.location.search;
+                                    window.location.replace(targetUrl);
+                                }
                             });
                         }
                     });
@@ -448,11 +466,6 @@
             if (variant) {
                 applyVariant(variant);
             } else {
-                // Instantly split client-side using cached value or 50/50 fallback (0ms latency)
-                var cachedSplit = localStorage.getItem('traffic_split_a');
-                var splitA = (cachedSplit !== null) ? parseInt(cachedSplit, 10) : 50;
-                if (isNaN(splitA)) splitA = 50;
-
                 var rand = Math.random() * 100;
                 var assigned = rand < splitA ? 'A' : 'B';
                 localStorage.setItem('ab_variant', assigned);
