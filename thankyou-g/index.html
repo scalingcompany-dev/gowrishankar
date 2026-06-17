@@ -19,6 +19,24 @@
     <script src="../firebase-config.js"></script>
     <script src="../db-helper.js"></script>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-18233075352"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-18233075352');
+    </script>
+
+    <!-- Event snippet for Purchase - 99 conversion page -->
+    <script>
+      gtag('event', 'conversion', {
+          'send_to': 'AW-18233075352/tPoGCLfX1cAcEJjNmvZD',
+          'transaction_id': ''
+      });
+    </script>
+
     <style>
         :root {
             --bg-dark: #05050A;
