@@ -407,13 +407,13 @@
         }
     </style>
 
-    <!-- Firebase SDK Compat -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <script src="../firebase-config.js"></script>
-    <script src="../db-helper.js"></script>
+    <!-- Firebase SDK Compat (Deferred to prevent parsing block) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js" defer></script>
+    <script src="../firebase-config.js" defer></script>
+    <script src="../db-helper.js" defer></script>
 
-    <!-- A/B Traffic Splitter -->
+    <!-- A/B Traffic Splitter (Instant Render Optimized) -->
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -432,10 +432,14 @@
                     var targetUrl = 'index.html' + window.location.search;
                     window.location.replace(targetUrl);
                 } else {
+                    // Variant B: Show page immediately without blocking latency
                     document.documentElement.style.visibility = '';
                     document.addEventListener('DOMContentLoaded', function() {
-                        if (window.dbHelper) {
+                        if (window.dbHelper && window.dbHelper.isConfigured()) {
                             window.dbHelper.trackView('B');
+                            window.dbHelper.getTrafficSplit(function(splitA) {
+                                localStorage.setItem('traffic_split_a', splitA);
+                            });
                         }
                     });
                 }
@@ -444,40 +448,15 @@
             if (variant) {
                 applyVariant(variant);
             } else {
-                document.documentElement.style.visibility = 'hidden';
+                // Instantly split client-side using cached value or 50/50 fallback (0ms latency)
+                var cachedSplit = localStorage.getItem('traffic_split_a');
+                var splitA = (cachedSplit !== null) ? parseInt(cachedSplit, 10) : 50;
+                if (isNaN(splitA)) splitA = 50;
 
-                function assignAndRoute(splitA) {
-                    var rand = Math.random() * 100;
-                    var assigned = rand < splitA ? 'A' : 'B';
-                    localStorage.setItem('ab_variant', assigned);
-                    applyVariant(assigned);
-                }
-
-                var resolved = false;
-                
-                function resolveSplit() {
-                    if (resolved) return;
-                    resolved = true;
-                    if (window.dbHelper && window.dbHelper.isConfigured()) {
-                        window.dbHelper.getTrafficSplit(function(splitA) {
-                            assignAndRoute(splitA);
-                        });
-                    } else {
-                        assignAndRoute(50);
-                    }
-                }
-
-                setTimeout(function() {
-                    if (!resolved) {
-                        resolved = true;
-                        assignAndRoute(50);
-                    }
-                }, 250);
-
-                document.addEventListener('DOMContentLoaded', resolveSplit);
-                if (document.readyState === 'interactive' || document.readyState === 'complete') {
-                    resolveSplit();
-                }
+                var rand = Math.random() * 100;
+                var assigned = rand < splitA ? 'A' : 'B';
+                localStorage.setItem('ab_variant', assigned);
+                applyVariant(assigned);
             }
         })();
     </script>
@@ -518,8 +497,9 @@
 
 
             <h1 class="main-headline-majestic">
-                మీ Subconscious Mind ని రీప్రోగ్రామ్ చేసి... <span class="highlight-orange">కేవలం 2 రోజుల్లో</span>
-                మీరు కోరుకున్న <span class="highlight-orange">ధనం, విజయం & ఆనందాన్ని</span> ఆకర్షించే సీక్రెట్ ఫార్ములా!
+                మీ Mind ని Reprogram చేసే <span class="highlight-orange">2-Day Scientific Manifestation Formula</span>
+                ద్వారా <span class="highlight-orange">Rich, Confident & Successful Life</span> ని Manifest చేసుకోవడం
+                ఎలాగో నేర్చుకోండి
             </h1>
             <div class="sub-headline-line">
                 ఈ powerful masterclass లో, Gowrisankar Singareddy గారు <span class="highlight-orange">Millionaire

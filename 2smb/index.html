@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="icon" type="image/webp" href="../coach-image-2.jpg">
 
-    <!-- Firebase SDK Compat -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <script src="../firebase-config.js"></script>
-    <script src="../db-helper.js"></script>
+    <!-- Firebase SDK Compat (Deferred to prevent parsing block) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js" defer></script>
+    <script src="../firebase-config.js" defer></script>
+    <script src="../db-helper.js" defer></script>
 
-    <!-- A/B Traffic Splitter -->
+    <!-- A/B Traffic Splitter (Instant Render Optimized) -->
     <script>
         (function() {
             var urlParams = new URLSearchParams(window.location.search);
@@ -46,10 +46,14 @@
                     }
                     window.location.replace(targetUrl);
                 } else {
+                    // Variant A: Show page immediately without blocking latency
                     document.documentElement.style.visibility = '';
                     document.addEventListener('DOMContentLoaded', function() {
-                        if (window.dbHelper) {
+                        if (window.dbHelper && window.dbHelper.isConfigured()) {
                             window.dbHelper.trackView('A');
+                            window.dbHelper.getTrafficSplit(function(splitA) {
+                                localStorage.setItem('traffic_split_a', splitA);
+                            });
                         }
                     });
                 }
@@ -58,40 +62,15 @@
             if (variant) {
                 applyVariant(variant);
             } else {
-                document.documentElement.style.visibility = 'hidden';
+                // Instantly split client-side using cached value or 50/50 fallback (0ms latency)
+                var cachedSplit = localStorage.getItem('traffic_split_a');
+                var splitA = (cachedSplit !== null) ? parseInt(cachedSplit, 10) : 50;
+                if (isNaN(splitA)) splitA = 50;
 
-                function assignAndRoute(splitA) {
-                    var rand = Math.random() * 100;
-                    var assigned = rand < splitA ? 'A' : 'B';
-                    localStorage.setItem('ab_variant', assigned);
-                    applyVariant(assigned);
-                }
-
-                var resolved = false;
-                
-                function resolveSplit() {
-                    if (resolved) return;
-                    resolved = true;
-                    if (window.dbHelper && window.dbHelper.isConfigured()) {
-                        window.dbHelper.getTrafficSplit(function(splitA) {
-                            assignAndRoute(splitA);
-                        });
-                    } else {
-                        assignAndRoute(50);
-                    }
-                }
-
-                setTimeout(function() {
-                    if (!resolved) {
-                        resolved = true;
-                        assignAndRoute(50);
-                    }
-                }, 250);
-
-                document.addEventListener('DOMContentLoaded', resolveSplit);
-                if (document.readyState === 'interactive' || document.readyState === 'complete') {
-                    resolveSplit();
-                }
+                var rand = Math.random() * 100;
+                var assigned = rand < splitA ? 'A' : 'B';
+                localStorage.setItem('ab_variant', assigned);
+                applyVariant(assigned);
             }
         })();
     </script>
