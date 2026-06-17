@@ -37,7 +37,13 @@
             
             function applyVariant(assigned) {
                 if (assigned === 'B') {
-                    var targetUrl = 'b.html' + window.location.search;
+                    var path = window.location.pathname;
+                    var targetUrl = '';
+                    if (path.endsWith('/2smb')) {
+                        targetUrl = path + '/b.html' + window.location.search;
+                    } else {
+                        targetUrl = 'b.html' + window.location.search;
+                    }
                     window.location.replace(targetUrl);
                 } else {
                     document.documentElement.style.visibility = '';
