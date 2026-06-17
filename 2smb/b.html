@@ -36,14 +36,14 @@
             var variant = localStorage.getItem('ab_variant');
             
             function applyVariant(assigned) {
-                if (assigned === 'B') {
-                    var targetUrl = 'b.html' + window.location.search;
+                if (assigned === 'A') {
+                    var targetUrl = 'index.html' + window.location.search;
                     window.location.replace(targetUrl);
                 } else {
                     document.documentElement.style.visibility = '';
                     document.addEventListener('DOMContentLoaded', function() {
                         if (window.dbHelper) {
-                            window.dbHelper.trackView('A');
+                            window.dbHelper.trackView('B');
                         }
                     });
                 }
@@ -126,9 +126,8 @@
 
 
             <h1 class="main-headline-majestic">
-                మీ Mind ని Reprogram చేసే <span class="highlight-orange">2-Day Scientific Manifestation Formula</span>
-                ద్వారా <span class="highlight-orange">Rich, Confident & Successful Life</span> ని Manifest చేసుకోవడం
-                ఎలాగో నేర్చుకోండి
+                మీ Subconscious Mind ని రీప్రోగ్రామ్ చేసి... <span class="highlight-orange">కేవలం 2 రోజుల్లో</span>
+                మీరు కోరుకున్న <span class="highlight-orange">ధనం, విజయం & ఆనందాన్ని</span> ఆకర్షించే సీక్రెట్ ఫార్ములా!
             </h1>
             <div class="sub-headline-line">
                 ఈ powerful masterclass లో, Gowrisankar Singareddy గారు <span class="highlight-orange">Millionaire
@@ -1448,7 +1447,6 @@
             const ctaButtons = document.querySelectorAll('.cta-button, .massive-cta-orange, [href*="imjo.in"]');
             ctaButtons.forEach(button => {
                 button.addEventListener('click', function(e) {
-                    // Check if it's an anchor link on the same page
                     const href = this.getAttribute('href');
                     if (href && href.startsWith('#')) return;
 
@@ -1456,7 +1454,7 @@
                     const targetUrl = this.href;
                     
                     if (window.dbHelper && window.dbHelper.isConfigured()) {
-                        window.dbHelper.trackClick('A', function() {
+                        window.dbHelper.trackClick('B', function() {
                             window.location.href = targetUrl;
                         });
                         setTimeout(function() {

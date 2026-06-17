@@ -13,6 +13,12 @@
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap"
         rel="stylesheet">
 
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="../firebase-config.js"></script>
+    <script src="../db-helper.js"></script>
+
     <!-- Meta Pixel Code -->
     <script>
         !function (f, b, e, v, n, t, s) {
@@ -673,6 +679,21 @@
             };
 
             updateWorkshopDate();
+
+            // Load dynamic WhatsApp Link from Database
+            if (window.dbHelper) {
+                // Set default link immediately
+                const waBtn = document.querySelector('.whatsapp-cta-btn');
+                if (waBtn) {
+                    waBtn.setAttribute('href', defaultWhatsappUrl);
+                }
+
+                window.dbHelper.getWhatsappUrl(function(url) {
+                    if (waBtn && url) {
+                        waBtn.setAttribute('href', url);
+                    }
+                });
+            }
         });
     </script>
 

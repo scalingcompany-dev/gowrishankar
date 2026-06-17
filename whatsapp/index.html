@@ -66,9 +66,45 @@
             100% { transform: rotate(360deg); }
         }
     </style>
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="../firebase-config.js"></script>
+    <script src="../db-helper.js"></script>
+
     <script type="text/javascript">
-        // Use replace so that the redirect page is not in the browser history
-        window.location.replace("https://chat.whatsapp.com/JdeIMpfWTob0hTJ1am7sfn?s=cl&p=a&ilr=1&amv=1");
+        (function() {
+            var redirected = false;
+            
+            function doRedirect(url) {
+                if (redirected) return;
+                redirected = true;
+                window.location.replace(url || defaultWhatsappUrl);
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.querySelector('.btn');
+                if (btn) {
+                    btn.setAttribute('href', defaultWhatsappUrl);
+                }
+
+                if (window.dbHelper && window.dbHelper.isConfigured()) {
+                    window.dbHelper.getWhatsappUrl(function(url) {
+                        if (btn && url) {
+                            btn.setAttribute('href', url);
+                        }
+                        doRedirect(url);
+                    });
+                } else {
+                    doRedirect(defaultWhatsappUrl);
+                }
+
+                // Safety timeout: redirect to fallback after 800ms
+                setTimeout(function() {
+                    doRedirect(defaultWhatsappUrl);
+                }, 800);
+            });
+        })();
     </script>
 </head>
 <body>
@@ -76,7 +112,7 @@
         <div class="spinner"></div>
         <h1>Redirecting to WhatsApp</h1>
         <p>We are connecting you to the WhatsApp group. If the page doesn't redirect automatically, please click the button below.</p>
-        <a class="btn" href="https://chat.whatsapp.com/JdeIMpfWTob0hTJ1am7sfn?s=cl&p=a&ilr=1&amv=1">Join Group</a>
+        <a class="btn" href="#">Join Group</a>
     </div>
 </body>
 </html>
