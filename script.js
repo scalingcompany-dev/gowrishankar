@@ -19,10 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Sticky Mobile CTA Logic
+    // 2. Sticky CTA Reveal Logic (Scroll and reveal)
     const stickyFooter = document.getElementById('stickyFooter');
-    const heroCTA = document.querySelector('.hero-section-majestic .massive-cta-orange');
-    const paymentSection = document.getElementById('payment');
+    const heroCTA = document.querySelector('.massive-cta-orange');
+    
+    if (stickyFooter && heroCTA) {
+        const handleScroll = () => {
+            const heroCtaBottom = heroCTA.getBoundingClientRect().bottom + window.scrollY;
+            if (window.scrollY > heroCtaBottom) {
+                stickyFooter.classList.add('active');
+            } else {
+                stickyFooter.classList.remove('active');
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll(); // Initial check
+    }
     
     // Set first FAQ as active by default
     if (faqItems.length > 0) {

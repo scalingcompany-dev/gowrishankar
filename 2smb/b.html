@@ -15,10 +15,10 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="icon" type="image/webp" href="../coach-image-2.jpg">
 
-    <!-- Senior Designer Premium CSS Overrides for Variant B Hero Video -->
+    <!-- Premium CSS Overrides for Variant B Hero Image Showcase -->
     <style>
-        /* Senior Designer Premium Styles for Variant B Video Player */
-        .hero-video-section-wrap {
+        /* Premium Styles for Hero Image Showcase */
+        .hero-image-section-wrap {
             width: 100%;
             max-width: 760px;
             margin: 20px auto 40px auto;
@@ -26,7 +26,7 @@
             z-index: 10;
         }
 
-        .hero-video-container {
+        .hero-image-container {
             position: relative;
             width: 100%;
             border-radius: 24px;
@@ -37,255 +37,41 @@
             transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
         }
 
-        .hero-video-container:hover {
+        .hero-image-container:hover {
             transform: translateY(-4px);
             box-shadow: 0 40px 80px rgba(0, 0, 0, 0.9), 0 0 60px rgba(255, 176, 0, 0.3);
         }
 
-        /* Ambient background glow behind the video player */
-        .video-ambient-glow {
+        /* Ambient background glow behind the image */
+        .image-ambient-glow {
             position: absolute;
             top: -20%;
             left: -20%;
             width: 140%;
             height: 140%;
-            background: radial-gradient(circle, rgba(255, 176, 0, 0.2) 0%, transparent 60%);
+            background: radial-gradient(circle, rgba(255, 176, 0, 0.25) 0%, transparent 60%);
             z-index: 1;
             filter: blur(40px);
             pointer-events: none;
         }
 
-        .video-player-frame {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #000;
-            z-index: 2;
-        }
-
-        #yt-hero-player {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .hero-main-image {
             display: block;
-            pointer-events: none; /* Block click propagation to iframe */
-        }
-
-        @supports not (aspect-ratio: 16/9) {
-            .video-player-frame {
-                height: 0;
-                padding-bottom: 56.25%; /* 16:9 aspect ratio */
-                position: relative;
-            }
-            #yt-hero-player {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-        }
-
-        /* Widescreen Glassmorphic Interactive Overlay with Custom Thumbnail */
-        #yt-player-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.45)), url('../vsl_thumbnail.png') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            cursor: pointer;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-            pointer-events: auto !important; /* Force pointer events to trigger overlay click handler */
-        }
-
-        #yt-player-overlay:hover {
-            background: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.35)), url('../vsl_thumbnail.png') no-repeat center center;
-            background-size: cover;
-        }
-
-        .overlay-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            pointer-events: auto !important; /* Allow direct pointer events on content */
-            text-align: center;
-            padding: 24px;
-        }
-
-        /* Floating pulsing golden play button with concentric rings */
-        .play-pulse-btn {
+            height: auto;
+            border-radius: 20px;
+            z-index: 2;
             position: relative;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: radial-gradient(circle, #FFD700 0%, #FF8C00 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            border: 3px solid rgba(255, 255, 255, 0.45);
-            box-shadow: 0 15px 35px rgba(255, 140, 0, 0.4);
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.5s ease;
         }
 
-        /* Concentric Ring 1 */
-        .play-pulse-btn::before {
-            content: '';
-            position: absolute;
-            top: -15px;
-            left: -15px;
-            right: -15px;
-            bottom: -15px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 215, 0, 0.4);
-            animation: pulse-ring-outer 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-            pointer-events: none;
-            z-index: -1;
+        .hero-image-container:hover .hero-main-image {
+            transform: scale(1.02);
         }
 
-        /* Concentric Ring 2 */
-        .play-pulse-btn::after {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: -30px;
-            right: -30px;
-            bottom: -30px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 140, 0, 0.2);
-            animation: pulse-ring-outer 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
-            animation-delay: 0.6s;
-            pointer-events: none;
-            z-index: -2;
-        }
-
-        .hero-video-container:hover .play-pulse-btn {
-            transform: scale(1.15) rotate(5deg);
-            border-color: rgba(255, 255, 255, 0.85);
-            box-shadow: 0 20px 45px rgba(255, 140, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.3);
-        }
-
-        .play-icon {
-            width: 32px;
-            height: 32px;
-            fill: #fff;
-            margin-left: 6px; /* center play icon visually */
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
-            transition: transform 0.3s ease;
-        }
-
-        .hero-video-container:hover .play-icon {
-            transform: scale(1.08);
-        }
-
-        /* Pulsing ring keyframes */
-        @keyframes pulse-ring-outer {
-            0% {
-                transform: scale(0.85);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.4);
-                opacity: 0;
-            }
-        }
-
-        .overlay-text {
-            display: none !important; /* Hide overlay text */
-            font-family: 'Sora', sans-serif;
-            font-size: 1.25rem;
-            font-weight: 800;
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.9);
-            margin-top: 4px;
-        }
-
-        /* Glassmorphic Sound badge */
-        .sound-badge {
-            display: none !important; /* Hide sound badge */
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 8px 18px;
-            border-radius: 50px;
-            color: #fff;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            transition: background 0.3s, transform 0.3s;
-        }
-
-        .sound-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* Fully hide and make overlay click-through when playing unmuted */
-        .video-playing-unmuted #yt-player-overlay {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-        
-        .video-playing-unmuted .play-pulse-btn,
-        .video-playing-unmuted .overlay-text,
-        .video-playing-unmuted .sound-badge {
-            opacity: 0;
-            transform: scale(0.8) translateY(10px);
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            pointer-events: none;
-        }
-
-        /* Hovering active unmuted video reveals pause overlay */
-        .video-playing-unmuted:hover #yt-player-overlay {
-            background: rgba(0, 0, 0, 0.6);
-        }
-        
-        .video-playing-unmuted:hover .play-pulse-btn {
-            opacity: 1;
-            transform: scale(1);
-            animation: none;
-        }
-        
-        .video-playing-unmuted:hover .overlay-text {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Play Button animation keyframes */
-        @keyframes pulse-button-glow {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 176, 0, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 22px rgba(255, 176, 0, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 176, 0, 0);
-            }
-        }
-
-        /* Widescreen Video caption bar */
-        .video-caption-bar {
+        /* Caption bar */
+        .image-caption-bar {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -326,8 +112,8 @@
                 line-height: 1.3 !important;
                 margin-bottom: 15px !important;
             }
-            .hero-video-section-wrap {
-                order: 2; /* Position video directly below the headline */
+            .hero-image-section-wrap {
+                order: 2; /* Position image directly below the headline */
                 margin: 10px auto 25px auto !important;
                 width: 100% !important;
                 max-width: 100% !important;
@@ -357,52 +143,26 @@
                 order: 6 !important;
             }
 
-            /* 2. Frameless, cinematic video player card overrides */
-            .hero-video-container {
-                padding: 0 !important; /* Remove thick outer border padding */
-                background: transparent !important; /* Remove gradient backdrop frame */
+            /* 2. Frameless, cinematic image card overrides */
+            .hero-image-container {
+                padding: 0 !important;
+                background: transparent !important;
                 border-radius: 16px !important;
                 box-shadow: 0 15px 40px rgba(0, 0, 0, 0.65) !important;
             }
-            .video-player-frame {
+            .hero-main-image {
                 border-radius: 16px !important;
-                border: 1px solid rgba(255, 255, 255, 0.09) !important; /* Clean modern hairline border */
+                border: 1px solid rgba(255, 255, 255, 0.09) !important;
             }
-            .video-ambient-glow {
+            .image-ambient-glow {
                 opacity: 0.45 !important;
                 filter: blur(30px) !important;
             }
-            .video-caption-bar {
+            .image-caption-bar {
                 font-size: 0.8rem !important;
                 color: #94A3B8 !important;
                 margin-top: 10px !important;
                 padding: 0 8px !important;
-            }
-            .overlay-text {
-                font-size: 0.95rem !important;
-                letter-spacing: 1px !important;
-            }
-            .play-pulse-btn {
-                width: 60px !important;
-                height: 60px !important;
-                border-width: 2px !important;
-            }
-            .play-pulse-btn::before {
-                top: -10px !important;
-                left: -10px !important;
-                right: -10px !important;
-                bottom: -10px !important;
-            }
-            .play-pulse-btn::after {
-                top: -20px !important;
-                left: -20px !important;
-                right: -20px !important;
-                bottom: -20px !important;
-            }
-            .play-icon {
-                width: 24px !important;
-                height: 24px !important;
-                margin-left: 4px !important;
             }
         }
     </style>
@@ -554,33 +314,15 @@
 
             <hr class="hero-divider-small" style="margin-top: 30px;">
 
-            <!-- PREMIUM HERO VIDEO PLAYER (WIDESCREEN STANDALONE) -->
-            <div class="hero-video-section-wrap">
-                <div class="hero-video-container">
-                    <div class="video-ambient-glow"></div>
-                    <div class="video-player-frame">
-                        <div id="yt-hero-player"></div>
-                        <div id="yt-player-overlay">
-                            <div class="overlay-content">
-                                <div class="play-pulse-btn">
-                                    <svg viewBox="0 0 24 24" class="play-icon">
-                                        <path d="M8 6.82v10.36c0 .79.86 1.27 1.53.84l8.14-5.18c.62-.4.62-1.29 0-1.69L9.53 5.98a1 1 0 0 0-1.53.84z" fill="currentColor"/>
-                                    </svg>
-                                </div>
-                                <span class="overlay-text">Tap to Unmute & Listen</span>
-                                <div class="sound-badge">
-                                    <svg viewBox="0 0 24 24" class="sound-icon">
-                                        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z" fill="currentColor"/>
-                                    </svg>
-                                    <span>WITH SOUND</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- PREMIUM HERO IMAGE SHOWCASE -->
+            <div class="hero-image-section-wrap">
+                <div class="hero-image-container">
+                    <div class="image-ambient-glow"></div>
+                    <img src="https://media.swipepages.com/2026/4/673399e2725d3700118c3710/untitled-design--43-.png" alt="Millionaire Manifestation Blueprint™ Masterclass" class="hero-main-image" fetchpriority="high" decoding="async">
                 </div>
-                <div class="video-caption-bar">
+                <div class="image-caption-bar">
                     <span class="pulse-dot"></span>
-                    <span class="caption-text">Watch: Gowrisankar Singareddy explains the Millionaire Manifestation Blueprint™ (2 Mins)</span>
+                    <span class="caption-text">Millionaire Manifestation Blueprint™ - Step-by-Step Practical Scientific Formula in Telugu</span>
                 </div>
             </div>
 
@@ -644,7 +386,7 @@
                         <!-- Premium Action CTA -->
                         <div class="offer-cta-wrap">
                             <a href="https://imjo.in/ssQG98" class="cta-button massive-cta-orange pulse-anim-orange">
-                                JOIN NOW FOR JUST ₹99
+                                JOIN NOW FOR JUST ₹99 <span class="cta-arrow">→</span>
                                 <span class="cta-sub">Click Now to join</span>
                             </a>
                             <p class="bonus-highlight-text">Get Free Bonuses worth ₹10,488!</p>
@@ -1872,7 +1614,7 @@
             </div>
             <div class="sticky-right">
                 <a href="https://imjo.in/ssQG98" class="cta-button massive-cta-orange pulse-anim-orange">
-                    ➤ Join NOW FOR JUST ₹99 <span class="strike-dark">₹999</span>
+                    Join NOW FOR JUST ₹99 <span class="strike-dark">₹999</span> <span class="cta-arrow">→</span>
                     <span class="cta-sub">Get Bonuses Worth ₹ 10,488 For FREE</span>
                 </a>
             </div>
@@ -1906,117 +1648,6 @@
         });
     </script>
 
-    <!-- YouTube Player API for Hero Video -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        var ytPlayer;
-        var playRequested = false; // Queue play request if clicked before API is ready
 
-        // Register immediate click listener on overlay for maximum responsiveness
-        (function() {
-            const overlay = document.getElementById('yt-player-overlay');
-            const container = document.querySelector('.hero-video-container');
-            if (overlay) {
-                overlay.addEventListener('click', function() {
-                    if (ytPlayer && typeof ytPlayer.getPlayerState === 'function') {
-                        // Player is ready, toggle play/pause normal way
-                        var state = ytPlayer.getPlayerState();
-                        var isMuted = ytPlayer.isMuted();
-
-                        if (state === YT.PlayerState.PLAYING && !isMuted) {
-                            ytPlayer.pauseVideo();
-                            container.classList.remove('video-playing-unmuted');
-                        } else {
-                            ytPlayer.unMute();
-                            ytPlayer.playVideo();
-                            container.classList.add('video-playing-unmuted');
-                        }
-                    } else {
-                        // Player not ready yet, queue the play/unmute request
-                        playRequested = true;
-                        if (container) {
-                            container.classList.add('video-playing-unmuted'); // Hide overlay instantly for feedback
-                        }
-                    }
-                });
-            }
-        })();
-
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('yt-hero-player', {
-                videoId: 'etLhWKyWrvk',
-                playerVars: {
-                    'autoplay': 1,
-                    'mute': 1,
-                    'controls': 0,
-                    'disablekb': 1,
-                    'fs': 0,
-                    'modestbranding': 1,
-                    'showinfo': 0,
-                    'rel': 0,
-                    'loop': 1,
-                    'playlist': 'etLhWKyWrvk',
-                    'playsinline': 1,
-                    'enablejsapi': 1
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Autoplay and unmute immediately if user clicked overlay while player was loading
-            if (playRequested) {
-                ytPlayer.unMute();
-                ytPlayer.playVideo();
-            } else {
-                ytPlayer.playVideo();
-            }
-
-            // Mobile Autoplay bypass
-            var playStarted = false;
-            function startAutoplay() {
-                if (playStarted) return;
-                ytPlayer.playVideo();
-            }
-            window.addEventListener('touchstart', startAutoplay, { passive: true });
-            window.addEventListener('scroll', startAutoplay, { passive: true });
-            window.addEventListener('click', startAutoplay, { passive: true });
-
-            // Monitor state changes to keep container classes synced
-            const container = document.querySelector('.hero-video-container');
-            ytPlayer.addEventListener('onStateChange', function(e) {
-                if (e.data === YT.PlayerState.PLAYING) {
-                    playStarted = true;
-                    if (ytPlayer.isMuted()) {
-                        container.classList.remove('video-playing-unmuted');
-                    } else {
-                        container.classList.add('video-playing-unmuted');
-                    }
-                } else if (e.data === YT.PlayerState.PAUSED) {
-                    container.classList.remove('video-playing-unmuted');
-                }
-            });
-
-            // Intersection Observer to stop playing when scrolled away
-            if ('IntersectionObserver' in window) {
-                var observer = new IntersectionObserver(function(entries) {
-                    entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            ytPlayer.playVideo();
-                        } else {
-                            ytPlayer.pauseVideo();
-                        }
-                    });
-                }, { threshold: 0.15 });
-
-                var targetVideo = document.querySelector('.hero-video-section-wrap');
-                if (targetVideo) {
-                    observer.observe(targetVideo);
-                }
-            }
-        }
-    </script>
 </body>
 </html>
