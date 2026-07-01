@@ -174,8 +174,9 @@
     <script src="../db-helper.js" defer></script>
 
     <!-- A/B Traffic Splitter (Instant Render Optimized) -->
+    <style id="ab-hide">html { display: none !important; }</style>
     <script>
-        (function() {
+        (async function() {
             var urlParams = new URLSearchParams(window.location.search);
             var forceVariant = urlParams.get('v');
             if (forceVariant) {
@@ -185,16 +186,32 @@
                 }
             }
 
+            // Try to fetch latest split configuration before rendering
+            try {
+                var controller = new AbortController();
+                var timeoutId = setTimeout(function() { controller.abort(); }, 1500); // 1.5s max wait
+                var resp = await fetch('https://day-millionaire-manifest-default-rtdb.firebaseio.com/config/traffic_split_a.json', { cache: 'no-store', signal: controller.signal });
+                clearTimeout(timeoutId);
+                if (resp.ok) {
+                    var splitVal = await resp.json();
+                    if (splitVal !== null) {
+                        localStorage.setItem('traffic_split_a', splitVal);
+                    }
+                }
+            } catch (e) {
+                // Ignore network errors or timeout, fallback to cached
+            }
+
             var variant = localStorage.getItem('ab_variant');
             var cachedSplit = localStorage.getItem('traffic_split_a');
             var splitA = (cachedSplit !== null) ? parseInt(cachedSplit, 10) : 50;
             if (isNaN(splitA)) splitA = 50;
 
             // Force override if a variant is completely disabled in cache
-            if (splitA === 0 && variant !== 'B') {
+            if (splitA === 0) {
                 variant = 'B';
                 localStorage.setItem('ab_variant', 'B');
-            } else if (splitA === 100 && variant !== 'A') {
+            } else if (splitA === 100) {
                 variant = 'A';
                 localStorage.setItem('ab_variant', 'A');
             }
@@ -204,20 +221,13 @@
                     var targetUrl = 'index.html' + window.location.search;
                     window.location.replace(targetUrl);
                 } else {
-                    // Variant B: Show page immediately without blocking latency
+                    // Variant B: Show page immediately
+                    var hideStyle = document.getElementById('ab-hide');
+                    if (hideStyle) hideStyle.remove();
                     document.documentElement.style.visibility = '';
                     document.addEventListener('DOMContentLoaded', function() {
                         if (window.dbHelper && window.dbHelper.isConfigured()) {
                             window.dbHelper.trackView('B');
-                            window.dbHelper.getTrafficSplit(function(newSplitA) {
-                                localStorage.setItem('traffic_split_a', newSplitA);
-                                // If database shows B is disabled (100% split for A), redirect to A immediately
-                                if (newSplitA === 100) {
-                                    localStorage.setItem('ab_variant', 'A');
-                                    var targetUrl = 'index.html' + window.location.search;
-                                    window.location.replace(targetUrl);
-                                }
-                            });
                         }
                     });
                 }
@@ -318,7 +328,7 @@
             <div class="hero-image-section-wrap">
                 <div class="hero-image-container">
                     <div class="image-ambient-glow"></div>
-                    <img src="https://media.swipepages.com/2026/4/673399e2725d3700118c3710/untitled-design--43-.png" alt="Millionaire Manifestation Blueprint™ Masterclass" class="hero-main-image" fetchpriority="high" decoding="async">
+                    <img src="../coach-image-2.jpg" alt="Millionaire Manifestation Blueprint™ Masterclass" class="hero-main-image" fetchpriority="high" decoding="async">
                 </div>
                 <div class="image-caption-bar">
                     <span class="pulse-dot"></span>
