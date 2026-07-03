@@ -170,19 +170,24 @@ document.addEventListener('DOMContentLoaded', () => {
             // Friday
             heroDynamicDates.forEach(el => {
                 el.innerHTML = `Live on Zoom • <strong>Tomorrow, ${formattedDateTextThankYou}</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
-                el.style.display = 'block';
+                if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
+                else el.style.display = 'block';
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'none');
         } else if (dayOfWeek === 6 || dayOfWeek === 0) {
             // Saturday or Sunday
             heroDynamicDates.forEach(el => {
                 el.innerHTML = `Live on Zoom • <strong>Today Evening 7:00 PM (IST)</strong>`;
-                el.style.display = 'block';
+                if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
+                else el.style.display = 'block';
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'none');
         } else {
             // Monday - Thursday
-            heroDynamicDates.forEach(el => el.style.display = 'none');
+            heroDynamicDates.forEach(el => {
+                if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'none';
+                else el.style.display = 'none';
+            });
             secondSectionDynamicDates.forEach(el => el.style.display = 'block');
         }
     };
