@@ -161,6 +161,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.textContent = formattedDateText;
             }
         });
+        
+        // Dynamic Date Display Logic based on day of week
+        const heroDynamicDates = document.querySelectorAll('.hero-dynamic-date');
+        const secondSectionDynamicDates = document.querySelectorAll('.second-section-dynamic-date');
+        
+        if (dayOfWeek === 5) {
+            // Friday
+            heroDynamicDates.forEach(el => {
+                el.innerHTML = `Live on Zoom • <strong>Tomorrow, ${formattedDateTextThankYou}</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
+                el.style.display = 'block';
+            });
+            secondSectionDynamicDates.forEach(el => el.style.display = 'none');
+        } else if (dayOfWeek === 6 || dayOfWeek === 0) {
+            // Saturday or Sunday
+            heroDynamicDates.forEach(el => {
+                el.innerHTML = `Live on Zoom • <strong>Today Evening 7:00 PM (IST)</strong>`;
+                el.style.display = 'block';
+            });
+            secondSectionDynamicDates.forEach(el => el.style.display = 'none');
+        } else {
+            // Monday - Thursday
+            heroDynamicDates.forEach(el => el.style.display = 'none');
+            secondSectionDynamicDates.forEach(el => el.style.display = 'block');
+        }
     };
     updateWorkshopDate();
 
