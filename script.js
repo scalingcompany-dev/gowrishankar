@@ -174,8 +174,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 else el.style.display = 'block';
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'none');
-        } else if (dayOfWeek === 6 || dayOfWeek === 0) {
-            // Saturday or Sunday
+        } else if (dayOfWeek === 6 && nowIST.getHours() < 18) {
+            // Saturday before 6:00 PM
             heroDynamicDates.forEach(el => {
                 el.innerHTML = `Live on Zoom • <strong>Today Evening 7:00 PM (IST)</strong>`;
                 if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'none');
         } else {
-            // Monday - Thursday
+            // Saturday after 6:00 PM, Sunday, Monday - Thursday
             heroDynamicDates.forEach(el => {
                 if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'none';
                 else el.style.display = 'none';
