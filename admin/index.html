@@ -856,6 +856,19 @@
                     variant_b: { views: 0, clicks: 0 }
                 };
                 updateStatsUI(stats);
+            }, function(error) {
+                document.getElementById('loadingMetrics').innerHTML = 
+                    `<div style="color: var(--danger); margin-bottom: 15px; font-weight: 700;">Connection Error: ${error.message}</div>
+                     <div style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; max-width: 480px; margin: 0 auto; text-align: left; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        Please verify your Firebase Realtime Database Rules allow read/write access.
+                        To resolve this, go to your Firebase Console under Realtime Database > Rules, and configure them as follows:
+                        <pre style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; margin-top: 10px; font-family: monospace; color: #a78bfa; overflow-x: auto; border: 1px solid rgba(255,255,255,0.05);">{
+  "rules": {
+    ".read": "true",
+    ".write": "true"
+  }
+}</pre>
+                     </div>`;
             });
         }
 

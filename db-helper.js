@@ -136,12 +136,15 @@
     },
 
     // Listen to real-time metrics updates
-    listenToMetrics: function(callback) {
+    listenToMetrics: function(callback, errorCallback) {
       if (!isFirebaseReady) return null;
 
       const ref = db.ref('metrics');
       ref.on('value', function(snapshot) {
         callback(snapshot.val());
+      }, function(error) {
+        console.error("Error listening to metrics:", error);
+        if (errorCallback) errorCallback(error);
       });
       return ref;
     },
