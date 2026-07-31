@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to Zoom...</title>
+
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 16px;
+            color: #2D8CFF;
+            /* Zoom Blue */
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            color: #606770;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #2D8CFF;
+            /* Zoom blue button */
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn:hover {
+            background-color: #1570E5;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #2D8CFF;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 24px auto;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <!-- Firebase SDK Compat -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
+    <script src="../firebase-config.js"></script>
+    <script src="../db-helper.js"></script>
+
+    <script type="text/javascript">
+        (function () {
+            var redirected = false;
+
+            function doRedirect(url) {
+                if (redirected) return;
+                redirected = true;
+                window.location.replace(url || defaultZoomUrl);
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                var btn = document.querySelector('.btn');
+                if (btn) {
+                    btn.setAttribute('href', defaultZoomUrl);
+                }
+
+                if (window.dbHelper && window.dbHelper.isConfigured()) {
+                    window.dbHelper.getZoomUrl(function (url) {
+                        if (btn && url) {
+                            btn.setAttribute('href', url);
+                        }
+                        doRedirect(url);
+                    });
+                } else {
+                    doRedirect(defaultZoomUrl);
+                }
+
+                // Safety timeout: redirect to fallback after 4000ms
+                setTimeout(function () {
+                    doRedirect(defaultZoomUrl);
+                }, 4000);
+            });
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="spinner"></div>
+        <h1>Redirecting to Zoom</h1>
+        <p>We are connecting you to the masterclass Zoom room. If the page doesn't redirect automatically, please click the
+            button below.</p>
+        <a class="btn" href="#">Join Masterclass</a>
+    </div>
+</body>
+
+</html>

@@ -630,27 +630,52 @@
     <!-- Dynamic Workshop Date Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const updateWorkshopDate = () => {
+            const renderWithDate = (dbDateStr) => {
                 let nowUTC = new Date();
                 let offsetIST = 5.5 * 60 * 60 * 1000;
                 let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
 
-                let dayOfWeek = nowIST.getDay();
-                let daysToSaturday = 6 - dayOfWeek;
+                let useAutomatic = true;
+                let saturdayDate = null;
 
-                // Cutoff is Saturday at 6:00 PM (18:00) IST
-                if (dayOfWeek === 6 && nowIST.getHours() >= 18) {
-                    daysToSaturday += 7;
-                } else if (dayOfWeek === 0) {
-                    // If today is Sunday, the current workshop has already started/passed. Show next week's.
-                    daysToSaturday = 6;
+                if (dbDateStr) {
+                    try {
+                        const parts = dbDateStr.split('-');
+                        if (parts.length === 3) {
+                            const year = parseInt(parts[0], 10);
+                            const month = parseInt(parts[1], 10) - 1;
+                            const day = parseInt(parts[2], 10);
+
+                            // Cutoff is Saturday at 6:00 PM (18:00) IST
+                            let manualCutoffIST = new Date(year, month, day, 18, 0, 0);
+
+                            if (nowIST.getTime() < manualCutoffIST.getTime()) {
+                                saturdayDate = new Date(year, month, day, 0, 0, 0);
+                                useAutomatic = false;
+                            }
+                        }
+                    } catch (e) {
+                        console.error("Error parsing manual date:", e);
+                    }
                 }
 
-                let saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
+                if (useAutomatic) {
+                    let dayOfWeek = nowIST.getDay();
+                    let daysToSaturday = 6 - dayOfWeek;
 
-                // Skip June 13, 2026 batch as requested (rollover to the next week instead)
-                if (saturdayDate.getFullYear() === 2026 && saturdayDate.getMonth() === 5 && saturdayDate.getDate() === 13) {
-                    saturdayDate = new Date(saturdayDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                    // Cutoff is Saturday at 6:00 PM (18:00) IST
+                    if (dayOfWeek === 6 && nowIST.getHours() >= 18) {
+                        daysToSaturday += 7;
+                    } else if (dayOfWeek === 0) {
+                        daysToSaturday = 6;
+                    }
+
+                    saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
+
+                    // Skip June 13, 2026 batch as requested (rollover to the next week instead)
+                    if (saturdayDate.getFullYear() === 2026 && saturdayDate.getMonth() === 5 && saturdayDate.getDate() === 13) {
+                        saturdayDate = new Date(saturdayDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+                    }
                 }
 
                 let sundayDate = new Date(saturdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
@@ -676,6 +701,16 @@
                 dateElements.forEach(el => {
                     el.textContent = formattedDateTextThankYou;
                 });
+            };
+
+            const updateWorkshopDate = () => {
+                if (window.dbHelper && window.dbHelper.isConfigured()) {
+                    window.dbHelper.getWorkshopDate(function(dbDateStr) {
+                        renderWithDate(dbDateStr);
+                    });
+                } else {
+                    renderWithDate(null);
+                }
             };
 
             updateWorkshopDate();

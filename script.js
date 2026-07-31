@@ -98,31 +98,55 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     updateDynamicDeadline();
 
-    // 5. Automated Weekly Saturday-Sunday Date Rollover
-    const updateWorkshopDate = () => {
-        // Calculate the upcoming Saturday in IST (UTC + 5:30)
+    const renderWithDate = (dbDateStr) => {
         let nowUTC = new Date();
         let offsetIST = 5.5 * 60 * 60 * 1000;
         let nowIST = new Date(nowUTC.getTime() + (nowUTC.getTimezoneOffset() * 60 * 1000) + offsetIST);
         
-        let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
-        let daysToSaturday = 6 - dayOfWeek;
-        
-        // Cutoff is Saturday at 6:00 PM (18:00) IST
-        if (dayOfWeek === 6 && nowIST.getHours() >= 18) {
-            daysToSaturday += 7;
-        } else if (dayOfWeek === 0) {
-            // If today is Sunday, the current workshop has already started/passed. Show next week's.
-            daysToSaturday = 6;
+        let useAutomatic = true;
+        let saturdayDate = null;
+
+        if (dbDateStr) {
+            try {
+                const parts = dbDateStr.split('-');
+                if (parts.length === 3) {
+                    const year = parseInt(parts[0], 10);
+                    const month = parseInt(parts[1], 10) - 1;
+                    const day = parseInt(parts[2], 10);
+
+                    // Cutoff is Saturday at 6:00 PM (18:00) IST
+                    let manualCutoffIST = new Date(year, month, day, 18, 0, 0);
+
+                    if (nowIST.getTime() < manualCutoffIST.getTime()) {
+                        // The manual date is in the future. Use it!
+                        saturdayDate = new Date(year, month, day, 0, 0, 0);
+                        useAutomatic = false;
+                    }
+                }
+            } catch (e) {
+                console.error("Error parsing manual date:", e);
+            }
         }
-        
-        let saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
-        
-        // Skip June 13, 2026 batch as requested (rollover to the next week instead)
-        if (saturdayDate.getFullYear() === 2026 && saturdayDate.getMonth() === 5 && saturdayDate.getDate() === 13) {
-            saturdayDate = new Date(saturdayDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+
+        if (useAutomatic) {
+            let dayOfWeek = nowIST.getDay(); // 0 = Sunday, 1 = Monday, 2 = Tuesday, 3 = Wednesday, etc.
+            let daysToSaturday = 6 - dayOfWeek;
+            
+            // Cutoff is Saturday at 6:00 PM (18:00) IST
+            if (dayOfWeek === 6 && nowIST.getHours() >= 18) {
+                daysToSaturday += 7;
+            } else if (dayOfWeek === 0) {
+                daysToSaturday = 6;
+            }
+            
+            saturdayDate = new Date(nowIST.getTime() + (daysToSaturday * 24 * 60 * 60 * 1000));
+            
+            // Skip June 13, 2026 batch as requested (rollover to the next week instead)
+            if (saturdayDate.getFullYear() === 2026 && saturdayDate.getMonth() === 5 && saturdayDate.getDate() === 13) {
+                saturdayDate = new Date(saturdayDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+            }
         }
-        
+
         let sundayDate = new Date(saturdayDate.getTime() + (1 * 24 * 60 * 60 * 1000));
         
         const monthNamesShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -166,7 +190,24 @@ document.addEventListener('DOMContentLoaded', () => {
         const heroDynamicDates = document.querySelectorAll('.hero-dynamic-date');
         const secondSectionDynamicDates = document.querySelectorAll('.second-section-dynamic-date');
         
-        if (dayOfWeek === 5) {
+        // We only show "Tomorrow" or "Today Evening" in the hero section if saturdayDate is indeed the upcoming Saturday of this week
+        let tempDate = new Date(nowIST.getTime());
+        let tempDay = tempDate.getDay();
+        let tempDaysToSat = 6 - tempDay;
+        if (tempDay === 6 && nowIST.getHours() >= 18) {
+            tempDaysToSat += 7;
+        } else if (tempDay === 0) {
+            tempDaysToSat = 6;
+        }
+        let thisWeekSaturday = new Date(nowIST.getTime() + (tempDaysToSat * 24 * 60 * 60 * 1000));
+        
+        let isThisWeek = (saturdayDate.getFullYear() === thisWeekSaturday.getFullYear() &&
+                          saturdayDate.getMonth() === thisWeekSaturday.getMonth() &&
+                          saturdayDate.getDate() === thisWeekSaturday.getDate());
+                          
+        let dayOfWeek = nowIST.getDay();
+        
+        if (isThisWeek && dayOfWeek === 5) {
             // Friday
             heroDynamicDates.forEach(el => {
                 el.innerHTML = `Live on Zoom • <strong>Tomorrow, ${formattedDateTextThankYou}</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
@@ -174,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 else el.style.display = 'block';
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'none');
-        } else if (dayOfWeek === 6 && nowIST.getHours() < 18) {
+        } else if (isThisWeek && dayOfWeek === 6 && nowIST.getHours() < 18) {
             // Saturday before 6:00 PM
             heroDynamicDates.forEach(el => {
                 el.innerHTML = `Live on Zoom • <strong>Today Evening 7:00 PM (IST)</strong>`;
@@ -183,12 +224,22 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'none');
         } else {
-            // Saturday after 6:00 PM, Sunday, Monday - Thursday
+            // Saturday after 6:00 PM, Sunday, Monday - Thursday, or future manual date
             heroDynamicDates.forEach(el => {
                 if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'none';
                 else el.style.display = 'none';
             });
             secondSectionDynamicDates.forEach(el => el.style.display = 'block');
+        }
+    };
+
+    const updateWorkshopDate = () => {
+        if (window.dbHelper && window.dbHelper.isConfigured()) {
+            window.dbHelper.getWorkshopDate(function(dbDateStr) {
+                renderWithDate(dbDateStr);
+            });
+        } else {
+            renderWithDate(null);
         }
     };
     updateWorkshopDate();

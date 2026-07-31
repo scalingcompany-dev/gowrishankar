@@ -18,3 +18,7 @@ const adminPasscode = "8888";
 
 // Fallback WhatsApp Group link to use when Firebase is not configured or offline.
 const defaultWhatsappUrl = "https://chat.whatsapp.com/JdeIMpfWTob0hTJ1am7sfn?s=cl&p=a&ilr=1&amv=1";
+
+// Fallback Zoom link to use when Firebase is not configured or offline.
+const defaultZoomUrl = "https://zoom.us/j/1234567890";
+

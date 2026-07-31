@@ -57,6 +57,69 @@
       });
     },
 
+    // Get Zoom URL from DB, with fallback
+    getZoomUrl: function(callback) {
+      if (!isFirebaseReady) {
+        callback(defaultZoomUrl);
+        return;
+      }
+
+      db.ref('config/zoom_url').once('value').then(function(snapshot) {
+        const url = snapshot.val();
+        callback(url || defaultZoomUrl);
+      }).catch(function(err) {
+        console.error("Error reading Zoom URL from DB:", err);
+        callback(defaultZoomUrl);
+      });
+    },
+
+    // Update Zoom URL
+    updateZoomUrl: function(url, callback) {
+      if (!isFirebaseReady) {
+        console.error("Firebase not initialized. Cannot update Zoom URL.");
+        if (callback) callback(false);
+        return;
+      }
+
+      db.ref('config/zoom_url').set(url).then(function() {
+        if (callback) callback(true);
+      }).catch(function(err) {
+        console.error("Error updating Zoom URL in DB:", err);
+        if (callback) callback(false);
+      });
+    },
+
+    // Get Workshop Date from DB
+    getWorkshopDate: function(callback) {
+      if (!isFirebaseReady) {
+        callback(null);
+        return;
+      }
+
+      db.ref('config/workshop_date').once('value').then(function(snapshot) {
+        callback(snapshot.val());
+      }).catch(function(err) {
+        console.error("Error reading workshop date from DB:", err);
+        callback(null);
+      });
+    },
+
+    // Update Workshop Date
+    updateWorkshopDate: function(dateStr, callback) {
+      if (!isFirebaseReady) {
+        console.error("Firebase not initialized. Cannot update workshop date.");
+        if (callback) callback(false);
+        return;
+      }
+
+      db.ref('config/workshop_date').set(dateStr).then(function() {
+        if (callback) callback(true);
+      }).catch(function(err) {
+        console.error("Error updating workshop date in DB:", err);
+        if (callback) callback(false);
+      });
+    },
+
     // Get Traffic Split for Variant A (0 to 100). Default is 50.
     getTrafficSplit: function(callback) {
       if (!isFirebaseReady) {

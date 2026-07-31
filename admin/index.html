@@ -705,6 +705,53 @@
 
                 <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 24px 0;">
 
+                <form id="zoomForm" onsubmit="saveZoomLink(event)">
+                    <div class="form-group">
+                        <label for="zoomUrl">Zoom Meeting URL</label>
+                        <div class="input-wrapper">
+                            <input type="url" id="zoomUrl" placeholder="https://zoom.us/j/..." required>
+                        </div>
+                    </div>
+                    <button type="submit" class="submit-btn" style="background: linear-gradient(135deg, #2D8CFF 0%, #1570E5 100%); box-shadow: 0 8px 20px rgba(45, 140, 255, 0.2);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                            <polyline points="17 21 17 13 7 13 7 21"/>
+                            <polyline points="7 3 7 8 15 8"/>
+                        </svg>
+                        Save Zoom URL
+                    </button>
+                </form>
+
+                <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 24px 0;">
+
+                <form id="dateForm" onsubmit="saveWorkshopDate(event)">
+                    <div class="form-group">
+                        <label for="workshopDate">Manual Workshop Date (Saturday)</label>
+                        <div class="input-wrapper">
+                            <input type="date" id="workshopDate" style="width: 100%; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 14px; padding: 16px 20px; color: white; font-family: var(--font-sans); font-size: 0.95rem; transition: all 0.3s ease; color-scheme: dark;">
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 8px; line-height: 1.4;">
+                            Select the Saturday of the workshop. If this date is in the past, or if left empty, the site will automatically roll over to the next week (every Saturday evening 6:00 PM IST).
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button type="submit" class="submit-btn" style="flex: 2; background: linear-gradient(135deg, #10b981 0%, #059669 100%); box-shadow: 0 8px 20px rgba(16, 185, 129, 0.2);">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                <line x1="16" y1="2" x2="16" y2="6"/>
+                                <line x1="8" y1="2" x2="8" y2="6"/>
+                                <line x1="3" y1="10" x2="21" y2="10"/>
+                            </svg>
+                            Save Date
+                        </button>
+                        <button type="button" onclick="clearWorkshopDate()" class="reset-btn" style="flex: 1; margin-top: 0; padding: 16px 20px; font-weight: 700;">
+                            Clear Date
+                        </button>
+                    </div>
+                </form>
+
+                <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.08); margin: 24px 0;">
+
                 <form id="splitForm" onsubmit="saveTrafficSplit(event)">
                     <div class="form-group">
                         <label>Traffic Split Control</label>
@@ -821,6 +868,8 @@
                 document.getElementById('loadingMetrics').style.display = 'none';
                 document.getElementById('metricsContent').style.display = 'grid';
                 document.getElementById('whatsappUrl').value = defaultWhatsappUrl;
+                document.getElementById('zoomUrl').value = defaultZoomUrl;
+                document.getElementById('workshopDate').value = '';
                 document.getElementById('trafficSplit').value = 50;
                 updateSplitLabel(50);
                 updateStatsUI(mockMetrics);
@@ -834,6 +883,16 @@
             // Load WhatsApp URL
             window.dbHelper.getWhatsappUrl(function(url) {
                 document.getElementById('whatsappUrl').value = url;
+            });
+
+            // Load Zoom URL
+            window.dbHelper.getZoomUrl(function(url) {
+                document.getElementById('zoomUrl').value = url;
+            });
+
+            // Load Workshop Date
+            window.dbHelper.getWorkshopDate(function(dateStr) {
+                document.getElementById('workshopDate').value = dateStr || '';
             });
 
             // Load Traffic Split
@@ -934,6 +993,63 @@
                     showToast("WhatsApp Group URL updated!");
                 } else {
                     showToast("Update failed. Check database rules.", true);
+                }
+            });
+        }
+
+        function saveZoomLink(event) {
+            event.preventDefault();
+            const url = document.getElementById('zoomUrl').value.trim();
+            const hasFirebase = window.dbHelper && window.dbHelper.isConfigured();
+
+            if (!hasFirebase) {
+                showToast("Cannot save: running in Mockup mode.", true);
+                return;
+            }
+
+            window.dbHelper.updateZoomUrl(url, function(success) {
+                if (success) {
+                    showToast("Zoom Meeting URL updated!");
+                } else {
+                    showToast("Update failed. Check database rules.", true);
+                }
+            });
+        }
+
+        function saveWorkshopDate(event) {
+            event.preventDefault();
+            const dateStr = document.getElementById('workshopDate').value;
+            const hasFirebase = window.dbHelper && window.dbHelper.isConfigured();
+
+            if (!hasFirebase) {
+                showToast("Cannot save: running in Mockup mode.", true);
+                return;
+            }
+
+            window.dbHelper.updateWorkshopDate(dateStr, function(success) {
+                if (success) {
+                    showToast("Workshop Date updated!");
+                } else {
+                    showToast("Update failed. Check database rules.", true);
+                }
+            });
+        }
+
+        function clearWorkshopDate() {
+            const hasFirebase = window.dbHelper && window.dbHelper.isConfigured();
+
+            if (!hasFirebase) {
+                document.getElementById('workshopDate').value = '';
+                showToast("Mock workshop date cleared!");
+                return;
+            }
+
+            window.dbHelper.updateWorkshopDate(null, function(success) {
+                if (success) {
+                    document.getElementById('workshopDate').value = '';
+                    showToast("Workshop Date cleared! Automated weekly rollover active.");
+                } else {
+                    showToast("Clear failed.", true);
                 }
             });
         }
