@@ -79,11 +79,30 @@
                     var hideStyle = document.getElementById('ab-hide');
                     if (hideStyle) hideStyle.remove();
                     document.documentElement.style.visibility = '';
-                    document.addEventListener('DOMContentLoaded', function() {
+                    
+                    // Reliably track view even if DOMContentLoaded has already fired
+                    function recordView() {
                         if (window.dbHelper && window.dbHelper.isConfigured()) {
                             window.dbHelper.trackView('A');
+                        } else {
+                            var attempts = 0;
+                            var iv = setInterval(function() {
+                                attempts++;
+                                if (window.dbHelper && window.dbHelper.isConfigured()) {
+                                    clearInterval(iv);
+                                    window.dbHelper.trackView('A');
+                                } else if (attempts > 50) {
+                                    clearInterval(iv);
+                                }
+                            }, 100);
                         }
-                    });
+                    }
+
+                    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+                        recordView();
+                    } else {
+                        document.addEventListener('DOMContentLoaded', recordView);
+                    }
                 }
             }
 
