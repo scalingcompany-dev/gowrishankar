@@ -1791,6 +1791,40 @@ ul {
     font-weight: 700;
 }
 
+/* MOBILE ONLY CTA BUTTON (BELOW PROMISE) */
+.hero-mobile-only-cta {
+    display: none;
+    width: 100%;
+    max-width: 380px;
+    margin: 16px auto 10px auto;
+    text-align: center;
+}
+
+.hero-mobile-only-cta .massive-cta-orange {
+    font-size: 1.15rem;
+    padding: 14px 18px;
+}
+
+@media (max-width: 768px) {
+    .hero-mobile-only-cta {
+        display: block;
+    }
+}
+
+/* CTA ABOVE VIDEO (DESKTOP & MOBILE) */
+.hero-above-video-cta {
+    display: block;
+    width: 100%;
+    max-width: 440px;
+    margin: 15px auto 25px auto;
+    text-align: center;
+}
+
+.hero-above-video-cta .massive-cta-orange {
+    font-size: 1.25rem;
+    padding: 16px 20px;
+}
+
 /* CONTEXT & PHILOSOPHY BOX */
 .hero-context-box {
     background: rgba(255, 255, 255, 0.03);
