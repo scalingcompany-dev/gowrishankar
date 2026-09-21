@@ -1684,13 +1684,14 @@ ul {
     text-align: center;
     padding: 10px 16px;
     font-weight: 800;
-    font-size: 1.05rem;
+    font-size: 0.98rem;
+    letter-spacing: 0.2px;
     width: 100%;
 }
 
 .hero-section-majestic {
     background-color: #05050A;
-    padding: 50px 0 70px 0;
+    padding: 45px 0 65px 0;
     position: relative;
     overflow: hidden;
 }
@@ -1713,53 +1714,149 @@ ul {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 1050px;
+    max-width: 1020px;
     margin: 0 auto;
     padding: 0 20px;
     position: relative;
     z-index: 1;
 }
 
-.main-headline-majestic {
-    font-size: 2.8rem;
-    line-height: 1.3;
-    margin-bottom: 24px;
-    color: #fff;
-    text-transform: none;
-    max-width: 1000px;
-    font-weight: 800;
-}
-
-.main-headline-majestic .highlight-orange {
+/* AUDIENCE PILL BADGE */
+.hero-badge-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 176, 0, 0.1);
+    border: 1px solid rgba(255, 176, 0, 0.35);
     color: #FFB000;
+    font-size: 0.85rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 50px;
+    margin-bottom: 22px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    box-shadow: 0 0 20px rgba(255, 176, 0, 0.12);
 }
 
-.sub-headline-line {
-    font-size: 1.25rem;
-    display: block;
-    margin: 15px auto 25px auto;
+.hero-badge-pill .badge-star {
+    color: #FFB000;
+    font-size: 1rem;
+}
+
+/* HEADLINE GROUP */
+.hero-headline-group {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto 20px auto;
+}
+
+.hero-hook-text {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #E2E8F0;
+    margin-bottom: 12px;
+    letter-spacing: 0.2px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.hero-primary-headline {
+    font-size: 2.5rem;
+    line-height: 1.35;
+    font-weight: 800;
+    color: #FFFFFF;
+    margin: 0 auto 16px auto;
+    text-align: center;
+}
+
+.hero-primary-headline .highlight-orange {
+    color: #FFB000;
+    text-shadow: 0 0 25px rgba(255, 176, 0, 0.3);
+}
+
+.hero-promise-headline {
+    font-size: 1.3rem;
+    line-height: 1.55;
+    font-weight: 600;
     color: #CBD5E1;
-    font-weight: 500;
-    max-width: 950px;
+    margin: 0 auto;
+    max-width: 920px;
+    text-align: center;
 }
 
-.pain-line-majestic {
-    font-size: 1.1rem;
-    color: #F8FAFC;
-    background: rgba(255, 176, 0, 0.05);
-    border: 1px solid rgba(255, 176, 0, 0.15);
-    border-left: 3px solid #FFB000;
-    border-radius: 8px;
-    padding: 16px 24px;
-    margin: 0 auto 24px auto;
-    max-width: 750px;
+.hero-promise-headline .highlight-orange {
+    color: #FFB000;
+    font-weight: 700;
+}
+
+/* CONTEXT & PHILOSOPHY BOX */
+.hero-context-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin: 10px auto 26px auto;
+    max-width: 920px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+    text-align: center;
+}
+
+.hero-context-desc {
+    font-size: 1.08rem;
+    line-height: 1.7;
+    color: #CBD5E1;
+    margin: 0 0 16px 0;
+    text-align: center;
+}
+
+.hero-context-desc .text-white {
+    color: #FFFFFF;
+}
+
+.hero-context-desc .highlight-orange {
+    color: #FFB000;
+    font-weight: 600;
+}
+
+.hero-philosophy-card {
+    background: linear-gradient(135deg, rgba(255, 176, 0, 0.08) 0%, rgba(255, 140, 0, 0.03) 100%);
+    border: 1px solid rgba(255, 176, 0, 0.25);
+    border-left: 4px solid #FFB000;
+    border-radius: 10px;
+    padding: 16px 22px;
+    text-align: left;
+}
+
+.philosophy-highlight-tag {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #FFB000;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.philosophy-text {
+    font-size: 0.98rem;
     line-height: 1.6;
-    font-weight: 500;
+    color: #E2E8F0;
+    margin: 0;
 }
 
+.philosophy-text strong {
+    color: #FFFFFF;
+}
+
+/* REASSURANCE LINES */
 .reassurance-lines-majestic {
     margin-bottom: 30px;
     text-align: center;
+    width: 100%;
 }
 
 .no-magic-tags {
@@ -1767,33 +1864,41 @@ ul {
     flex-wrap: wrap;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 16px;
 }
 
 .no-magic-tags span {
     font-size: 0.9rem;
-    color: #94A3B8;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 6px 14px;
+    color: #E2E8F0;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    padding: 7px 16px;
     border-radius: 50px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    font-weight: 500;
 }
 
-.reassurance-lines-majestic .line-2 {
-    font-size: 1.05rem;
-    font-weight: 600;
-    color: #FFB000;
-    background: rgba(255, 176, 0, 0.05);
-    padding: 8px 24px;
-    border-radius: 50px;
+.positive-guarantee-pill {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    border: 1px dashed rgba(255, 176, 0, 0.3);
+    gap: 10px;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    padding: 10px 22px;
+    border-radius: 50px;
+    color: #E2E8F0;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.positive-guarantee-pill strong {
+    color: #10B981;
 }
 
 .premium-icon {
@@ -2240,21 +2345,90 @@ ul {
 
 /* MOBILE RESPONSIVE NEW LAYOUT */
 @media (max-width: 768px) {
-    .main-headline-majestic { font-size: 2rem; }
-    .sub-headline-line { 
+    .top-banner-orange {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+        line-height: 1.35;
+    }
+    .hero-badge-pill {
+        font-size: 0.72rem;
+        padding: 6px 12px;
+        line-height: 1.35;
+        margin-bottom: 16px;
+        letter-spacing: 0.4px;
+    }
+    .hero-hook-text {
         font-size: 1.05rem;
-        line-height: 1.4;
+        line-height: 1.45;
+        margin-bottom: 8px;
+        padding: 0 4px;
+    }
+    .hero-primary-headline {
+        font-size: 1.55rem;
+        line-height: 1.35;
+        margin-bottom: 14px;
+        padding: 0 4px;
+    }
+    .hero-promise-headline {
+        font-size: 1.05rem;
+        line-height: 1.5;
+        margin-bottom: 16px;
+        padding: 0 4px;
+    }
+    .hero-context-box {
+        padding: 16px 14px;
+        margin: 6px 0 20px 0;
+        border-radius: 12px;
+        text-align: left;
+    }
+    .hero-context-desc {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        text-align: left;
+        margin-bottom: 12px;
+    }
+    .hero-philosophy-card {
+        padding: 12px 14px;
+    }
+    .philosophy-highlight-tag {
+        font-size: 0.92rem;
+        margin-bottom: 4px;
+    }
+    .philosophy-text {
+        font-size: 0.88rem;
+        line-height: 1.5;
+    }
+    .no-magic-tags {
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+    .no-magic-tags span {
+        font-size: 0.78rem;
+        padding: 5px 12px;
+    }
+    .positive-guarantee-pill {
+        font-size: 0.85rem;
+        padding: 10px 14px;
+        text-align: left;
+        border-radius: 12px;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    .main-headline-majestic { font-size: 1.6rem; }
+    .sub-headline-line { 
+        font-size: 1.02rem;
+        line-height: 1.45;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
-        padding: 16px 20px;
-        margin: 15px 10px 25px 10px;
+        padding: 14px 16px;
+        margin: 12px 0 20px 0;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.4);
         display: block;
     }
-    .pain-line-majestic { font-size: 1.05rem; }
+    .pain-line-majestic { font-size: 1.02rem; }
     
     .hero-lower-block { flex-direction: column-reverse; gap: 24px; }
     
