@@ -1825,6 +1825,129 @@ ul {
     padding: 16px 20px;
 }
 
+/* HERO WORKSHOP SCHEDULE BADGE (BELOW PROMISE HEADLINE) */
+.hero-workshop-schedule-badge {
+    display: inline-flex !important;
+    visibility: visible !important;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: rgba(255, 176, 0, 0.08);
+    border: 1px solid rgba(255, 176, 0, 0.35);
+    border-radius: 50px;
+    padding: 10px 24px;
+    margin: 18px auto 20px auto;
+    width: fit-content;
+    max-width: 95%;
+    box-shadow: 0 0 25px rgba(255, 176, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.hero-workshop-schedule-badge .schedule-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 1.05rem;
+    color: #E2E8F0;
+    font-weight: 500;
+}
+
+.hero-workshop-schedule-badge .schedule-icon,
+svg.schedule-icon {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
+    min-width: 18px !important;
+    min-height: 18px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    color: #FFB000 !important;
+    flex-shrink: 0 !important;
+}
+
+.hero-workshop-schedule-badge .schedule-text strong {
+    color: #FFB000;
+    font-weight: 700;
+}
+
+.hero-workshop-schedule-badge .schedule-divider-dot {
+    color: rgba(255, 176, 0, 0.6);
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+/* HERO DYNAMIC DATE DISPLAY (ABOVE CTA BUTTONS) */
+.hero-dynamic-date-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    text-align: center;
+    margin: 0 auto 12px auto;
+    width: 100%;
+}
+
+.hero-dynamic-date {
+    display: inline-block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #FFB000;
+    margin: 0;
+    line-height: 1.4;
+    text-shadow: 0 0 16px rgba(255, 176, 0, 0.25);
+    letter-spacing: 0.2px;
+}
+
+.hero-dynamic-date strong {
+    color: #FFB000;
+    font-weight: 800;
+}
+
+@media (max-width: 768px) {
+    .hero-workshop-schedule-badge {
+        display: flex !important;
+        visibility: visible !important;
+        gap: 8px 12px;
+        padding: 10px 16px;
+        border-radius: 14px;
+        margin: 14px auto 16px auto;
+        background: rgba(255, 176, 0, 0.1);
+        border: 1.5px solid rgba(255, 176, 0, 0.45);
+        box-shadow: 0 0 20px rgba(255, 176, 0, 0.18);
+    }
+    
+    .hero-workshop-schedule-badge .schedule-item {
+        font-size: 0.95rem;
+    }
+    
+    .hero-workshop-schedule-badge .schedule-icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .hero-dynamic-date-wrapper {
+        margin-bottom: 10px;
+    }
+    .hero-dynamic-date {
+        font-size: 1.02rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-workshop-schedule-badge {
+        flex-direction: column;
+        gap: 6px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 360px;
+    }
+    .hero-workshop-schedule-badge .schedule-divider-dot {
+        display: none;
+    }
+}
+
 /* CONTEXT & PHILOSOPHY BOX */
 .hero-context-box {
     background: rgba(255, 255, 255, 0.03);

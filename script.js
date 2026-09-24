@@ -186,11 +186,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
         
-        // Dynamic Date Display Logic based on day of week
+        // Dynamic Date Display Logic: Always display workshop dates and day above CTA buttons in hero section
         const heroDynamicDates = document.querySelectorAll('.hero-dynamic-date');
         const secondSectionDynamicDates = document.querySelectorAll('.second-section-dynamic-date');
         
-        // We only show "Tomorrow" or "Today Evening" in the hero section if saturdayDate is indeed the upcoming Saturday of this week
+        // Check if upcoming batch is this current week's Friday/Saturday
         let tempDate = new Date(nowIST.getTime());
         let tempDay = tempDate.getDay();
         let tempDaysToSat = 6 - tempDay;
@@ -207,39 +207,36 @@ document.addEventListener('DOMContentLoaded', () => {
                           
         let dayOfWeek = nowIST.getDay();
         
-        if (isThisWeek && dayOfWeek === 5) {
-            // Friday
-            heroDynamicDates.forEach(el => {
-                el.innerHTML = `Live on Zoom • <strong>Tomorrow, ${formattedDateTextThankYou}</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
-                if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
-                else el.style.display = 'block';
-            });
-            secondSectionDynamicDates.forEach(el => el.style.display = 'none');
-        } else if (isThisWeek && dayOfWeek === 6 && nowIST.getHours() < 18) {
-            // Saturday before 6:00 PM
-            heroDynamicDates.forEach(el => {
-                el.innerHTML = `Live on Zoom • <strong>Today Evening 7:00 PM (IST)</strong>`;
-                if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
-                else el.style.display = 'block';
-            });
-            secondSectionDynamicDates.forEach(el => el.style.display = 'none');
-        } else {
-            // Saturday after 6:00 PM, Sunday, Monday - Thursday, or future manual date
-            heroDynamicDates.forEach(el => {
-                if (el.closest('.hero-dynamic-date-wrapper')) el.closest('.hero-dynamic-date-wrapper').style.display = 'none';
-                else el.style.display = 'none';
-            });
-            secondSectionDynamicDates.forEach(el => el.style.display = 'block');
-        }
+        heroDynamicDates.forEach(el => {
+            if (isThisWeek && dayOfWeek === 5) {
+                // Friday: Tomorrow, Date & Day
+                el.innerHTML = `Date: <strong>Tomorrow, ${formattedDateText}</strong>`;
+            } else if (isThisWeek && dayOfWeek === 6 && nowIST.getHours() < 18) {
+                // Saturday before 6:00 PM: Today, Date & Day
+                el.innerHTML = `Date: <strong>Today, ${formattedDateText}</strong>`;
+            } else {
+                // All other days (Mon-Thu, Sun, Sat after 6 PM): Date & Day
+                el.innerHTML = `Date: <strong>${formattedDateText}</strong>`;
+            }
+            if (el.closest('.hero-dynamic-date-wrapper')) {
+                el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
+            }
+            el.style.display = 'block';
+        });
+
+        secondSectionDynamicDates.forEach(el => el.style.display = 'block');
     };
 
     const updateWorkshopDate = () => {
+        // Immediately render with calculated upcoming workshop date
+        renderWithDate(null);
+
         if (window.dbHelper && window.dbHelper.isConfigured()) {
             window.dbHelper.getWorkshopDate(function(dbDateStr) {
-                renderWithDate(dbDateStr);
+                if (dbDateStr) {
+                    renderWithDate(dbDateStr);
+                }
             });
-        } else {
-            renderWithDate(null);
         }
     };
     updateWorkshopDate();
