@@ -160,84 +160,93 @@ document.addEventListener('DOMContentLoaded', () => {
         let sunMonth = monthNamesShort[sundayDate.getMonth()];
         let sunDayName = dayNamesShort[sundayDate.getDay()];
         
-        // Format for landing page (includes days of week)
+        // Formatted dates
+        let dateOnlyText = "";
         let formattedDateText = "";
+        
         if (satMonth === sunMonth) {
+            dateOnlyText = `${satDay} & ${sunDay} ${satMonth}`;
             formattedDateText = `${satDay} & ${sunDay} ${satMonth} (${satDayName} & ${sunDayName})`;
         } else {
+            dateOnlyText = `${satDay} ${satMonth} & ${sunDay} ${sunMonth}`;
             formattedDateText = `${satDay} ${satMonth} & ${sunDay} ${sunMonth} (${satDayName} & ${sunDayName})`;
         }
         
-        // Format for thank you page (excludes days of week)
-        let formattedDateTextThankYou = "";
-        if (satMonth === sunMonth) {
-            formattedDateTextThankYou = `${satDay} & ${sunDay} ${satMonth}`;
+        // Calculate difference in calendar days between current day (IST) and workshop start day
+        const todayMidnight = new Date(nowIST.getFullYear(), nowIST.getMonth(), nowIST.getDate());
+        const workshopMidnight = new Date(saturdayDate.getFullYear(), saturdayDate.getMonth(), saturdayDate.getDate());
+        const diffDays = Math.round((workshopMidnight.getTime() - todayMidnight.getTime()) / (24 * 60 * 60 * 1000));
+        
+        // Dynamic date text depending on how close the workshop is:
+        // 1. diffDays === 0 (Today): "Today & Tomorrow (26 & 27 Sep)"
+        // 2. diffDays === 1 (Tomorrow): "Tomorrow & Sunday (26 & 27 Sep)" / "Tomorrow, 26 & 27 Sep (Sat & Sun)"
+        // 3. diffDays >= 2 (Long time away / future batch): "26 & 27 Sep (Sat & Sun)"
+        let heroBadgeDateText = "";
+        let heroCtaDateText = "";
+        let secondSectionDateText = "";
+        
+        if (diffDays === 0) {
+            heroBadgeDateText = `Today & Tomorrow (${dateOnlyText})`;
+            heroCtaDateText = `Date: <strong>Today & Tomorrow (${dateOnlyText})</strong>`;
+            secondSectionDateText = `Live on Zoom • Date: <strong>Today & Tomorrow (${dateOnlyText})</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
+        } else if (diffDays === 1) {
+            const secondDayLabel = (sunDayName === 'Sun') ? 'Sunday' : sunDayName;
+            heroBadgeDateText = `Tomorrow & ${secondDayLabel} (${dateOnlyText})`;
+            heroCtaDateText = `Date: <strong>Tomorrow, ${formattedDateText}</strong>`;
+            secondSectionDateText = `Live on Zoom • Date: <strong>Tomorrow, ${formattedDateText}</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
         } else {
-            formattedDateTextThankYou = `${satDay} ${satMonth} & ${sunDay} ${sunMonth}`;
+            heroBadgeDateText = formattedDateText;
+            heroCtaDateText = `Date: <strong>${formattedDateText}</strong>`;
+            secondSectionDateText = `Live on Zoom • Date: <strong>${formattedDateText}</strong> • Time: 7:00 PM - 9:00 PM (IST)`;
         }
         
         // Update all landing page date elements
         const dateElements = document.querySelectorAll('.dynamic-workshop-date');
         dateElements.forEach(el => {
             if (el.classList.contains('no-days')) {
-                el.textContent = formattedDateTextThankYou;
+                el.textContent = dateOnlyText;
+            } else if (el.closest('.hero-workshop-schedule-badge')) {
+                el.textContent = heroBadgeDateText;
             } else {
                 el.textContent = formattedDateText;
             }
         });
         
-        // Dynamic Date Display Logic: Always display workshop dates and day above CTA buttons in hero section
+        // Update hero dynamic dates above CTA buttons
         const heroDynamicDates = document.querySelectorAll('.hero-dynamic-date');
-        const secondSectionDynamicDates = document.querySelectorAll('.second-section-dynamic-date');
-        
-        // Check if upcoming batch is this current week's Friday/Saturday
-        let tempDate = new Date(nowIST.getTime());
-        let tempDay = tempDate.getDay();
-        let tempDaysToSat = 6 - tempDay;
-        if (tempDay === 6 && nowIST.getHours() >= 18) {
-            tempDaysToSat += 7;
-        } else if (tempDay === 0) {
-            tempDaysToSat = 6;
-        }
-        let thisWeekSaturday = new Date(nowIST.getTime() + (tempDaysToSat * 24 * 60 * 60 * 1000));
-        
-        let isThisWeek = (saturdayDate.getFullYear() === thisWeekSaturday.getFullYear() &&
-                          saturdayDate.getMonth() === thisWeekSaturday.getMonth() &&
-                          saturdayDate.getDate() === thisWeekSaturday.getDate());
-                          
-        let dayOfWeek = nowIST.getDay();
-        
         heroDynamicDates.forEach(el => {
-            if (isThisWeek && dayOfWeek === 5) {
-                // Friday: Tomorrow, Date & Day
-                el.innerHTML = `Date: <strong>Tomorrow, ${formattedDateText}</strong>`;
-            } else if (isThisWeek && dayOfWeek === 6 && nowIST.getHours() < 18) {
-                // Saturday before 6:00 PM: Today, Date & Day
-                el.innerHTML = `Date: <strong>Today, ${formattedDateText}</strong>`;
-            } else {
-                // All other days (Mon-Thu, Sun, Sat after 6 PM): Date & Day
-                el.innerHTML = `Date: <strong>${formattedDateText}</strong>`;
-            }
+            el.innerHTML = heroCtaDateText;
             if (el.closest('.hero-dynamic-date-wrapper')) {
                 el.closest('.hero-dynamic-date-wrapper').style.display = 'block';
             }
             el.style.display = 'block';
         });
 
-        secondSectionDynamicDates.forEach(el => el.style.display = 'block');
+        // Update second section dynamic dates
+        const secondSectionDynamicDates = document.querySelectorAll('.second-section-dynamic-date');
+        secondSectionDynamicDates.forEach(el => {
+            el.innerHTML = secondSectionDateText;
+            el.style.display = 'block';
+        });
     };
 
     const updateWorkshopDate = () => {
         // Immediately render with calculated upcoming workshop date
         renderWithDate(null);
 
-        if (window.dbHelper && window.dbHelper.isConfigured()) {
-            window.dbHelper.getWorkshopDate(function(dbDateStr) {
-                if (dbDateStr) {
-                    renderWithDate(dbDateStr);
-                }
-            });
-        }
+        // Fetch custom date from Firebase if set in Admin console
+        const fetchDbDate = (attempts = 0) => {
+            if (window.dbHelper && window.dbHelper.isConfigured()) {
+                window.dbHelper.getWorkshopDate(function(dbDateStr) {
+                    if (dbDateStr) {
+                        renderWithDate(dbDateStr);
+                    }
+                });
+            } else if (attempts < 10) {
+                setTimeout(() => fetchDbDate(attempts + 1), 200);
+            }
+        };
+        fetchDbDate();
     };
     updateWorkshopDate();
 

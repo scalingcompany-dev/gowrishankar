@@ -704,13 +704,20 @@
             };
 
             const updateWorkshopDate = () => {
-                if (window.dbHelper && window.dbHelper.isConfigured()) {
-                    window.dbHelper.getWorkshopDate(function(dbDateStr) {
-                        renderWithDate(dbDateStr);
-                    });
-                } else {
-                    renderWithDate(null);
-                }
+                renderWithDate(null);
+
+                const fetchDbDate = (attempts = 0) => {
+                    if (window.dbHelper && window.dbHelper.isConfigured()) {
+                        window.dbHelper.getWorkshopDate(function(dbDateStr) {
+                            if (dbDateStr) {
+                                renderWithDate(dbDateStr);
+                            }
+                        });
+                    } else if (attempts < 10) {
+                        setTimeout(() => fetchDbDate(attempts + 1), 200);
+                    }
+                };
+                fetchDbDate();
             };
 
             updateWorkshopDate();
