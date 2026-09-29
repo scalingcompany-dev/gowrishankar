@@ -1721,6 +1721,44 @@ ul {
     z-index: 1;
 }
 
+.main-headline-majestic {
+    font-size: 2.8rem;
+    line-height: 1.3;
+    margin-bottom: 24px;
+    color: #fff;
+    text-transform: none;
+    max-width: 1000px;
+    font-weight: 800;
+}
+
+.main-headline-majestic .highlight-orange {
+    color: #FFB000;
+}
+
+.sub-headline-line {
+    font-size: 1.25rem;
+    display: block;
+    margin: 15px auto 25px auto;
+    color: #CBD5E1;
+    font-weight: 500;
+    max-width: 950px;
+}
+
+.pain-line-majestic {
+    font-size: 1.1rem;
+    color: #F8FAFC;
+    background: rgba(255, 176, 0, 0.05);
+    border: 1px solid rgba(255, 176, 0, 0.15);
+    border-left: 3px solid #FFB000;
+    border-radius: 8px;
+    padding: 16px 24px;
+    margin: 0 auto 24px auto;
+    max-width: 750px;
+    line-height: 1.6;
+    font-weight: 500;
+    text-align: center;
+}
+
 /* AUDIENCE PILL BADGE */
 .hero-badge-pill {
     display: inline-flex;
@@ -2035,6 +2073,21 @@ svg.schedule-icon {
     align-items: center;
     gap: 8px;
     font-weight: 500;
+}
+
+.reassurance-lines-majestic .line-2 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #FFB000;
+    background: rgba(255, 176, 0, 0.05);
+    padding: 8px 24px;
+    border-radius: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 1px dashed rgba(255, 176, 0, 0.3);
+    margin: 0 auto;
 }
 
 .positive-guarantee-pill {
@@ -2572,21 +2625,36 @@ svg.schedule-icon {
         align-items: flex-start;
         gap: 8px;
     }
-    .main-headline-majestic { font-size: 1.6rem; }
+    .main-headline-majestic { 
+        font-size: 1.85rem !important; 
+        line-height: 1.32 !important;
+        margin-bottom: 16px !important;
+        padding: 0 4px;
+    }
     .sub-headline-line { 
-        font-size: 1.02rem;
-        line-height: 1.45;
+        font-size: 1.05rem !important;
+        line-height: 1.55 !important;
         background: rgba(255, 255, 255, 0.04);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
         padding: 14px 16px;
-        margin: 12px 0 20px 0;
+        margin: 12px auto 18px auto;
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 10px 30px rgba(0, 0, 0, 0.4);
         display: block;
     }
-    .pain-line-majestic { font-size: 1.02rem; }
+    .pain-line-majestic { 
+        font-size: 0.98rem !important;
+        line-height: 1.55 !important;
+        padding: 12px 16px !important;
+        margin: 0 auto 20px auto !important;
+    }
+    .reassurance-lines-majestic .line-2 {
+        font-size: 0.9rem !important;
+        padding: 8px 16px !important;
+        line-height: 1.4 !important;
+    }
     
     .hero-lower-block { flex-direction: column-reverse; gap: 24px; }
     
